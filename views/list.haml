@@ -1,0 +1,12 @@
+%p
+  Lista för
+  = @user
+  
+%ul
+  - @list.items.each do |item|
+    %li
+      %p=link_to(h(item.title), item.url)
+      %p=h item.tags.to_a.join(', ')
+    
+
+  

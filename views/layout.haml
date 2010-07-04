@@ -1,0 +1,37 @@
+!!!
+%html
+  %head
+    %meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+    %title Delishlist
+    %link(rel="shortcut icon" href="/favicon.ico" type="image/vnd.microsoft.icon")
+    %link(rel="stylesheet" type="text/css" href="/master.css")
+    %meta(name="author" content="Henrik Nyh (http://henrik.nyh.se)")
+  
+  %body
+  
+    #header
+      #title
+        %h1= "%s / %s" % [link_to('delishlist', '/'), "todo"]
+        %p= "a(n unofficial) %s wishlist" % link_to('Delicious', 'http://delicious.com/')
+  
+    #content
+      = yield
+    
+    #footer
+      %p
+        By
+        = link_to('Henrik Nyh', 'http://henrik.nyh.se/')
+        = "&lt;%s&gt;." % link_to('info@delishlist.com', 'mailto:info@delishlist.com')
+        = "Like this site? Get me %s! ;)" % link_to('something', '/malesca')
+      %p
+        This site is not affiliated with Yahoo! Inc., owner of the "Delicious" trademark.
+      %p
+        "Anchor", "Edit", "Add" and "Picture" icons by
+        = link_to('Mark James', 'http://www.famfamfam.com/'), "."
+        The adapted data from
+        = delicious_link
+        is licensed under
+        = link_to('Creative Commons Attribution Share-Alike 3.0', 'http://creativecommons.org/licenses/by-sa/3.0/'), "."
+
+    =# partial 'layout/google_analytics'
+    
