@@ -1,0 +1,137 @@
+#sidebar, #no-ads
+  font-size: 0.8em
+  line-height: 1.2em
+  
+#no-ads
+  padding: 0
+
+#sidebar
+  float: right
+  min-width: 220px
+  width: 16em
+  margin-left: 2em
+  
+  h3
+    font-weight: normal
+    font-size: 1.35em
+    color: #000
+    &:first-child
+      margin-top: 0
+    &#ads
+      margin-bottom: 0
+
+dl
+
+  dt
+    font-weight: normal
+    font-size: 0.95em
+    margin: 1em 0 0 0
+    
+    .thumbnail
+      display: block
+      height: 42px
+      width: 60px
+      float: left
+      margin-left: -75px
+      text-align: center
+      padding-top: 0
+
+      // show over facebox background during hover
+      position: absolute
+      z-index: 9999
+
+      img
+        height: 42px
+        max-width: 60px
+
+    &.first-in-rating-block
+      margin-top: 3em
+        
+    .actions
+      visibility: hidden
+      margin-left: 0.75em
+      position: absolute
+      background: #FFF
+      -moz-border-radius: 3px
+      -webkit-border-radius: 3px
+      
+      a
+        padding: 0 0.25em
+        opacity: 0.7
+        &:hover
+          opacity: 1
+
+    &:hover .actions
+      visibility: visible
+
+  dd
+    margin: 0 0 1.4em 0
+    padding: 0
+    
+    p.description
+      font-size: 0.8em
+      margin: 0.3em 0
+      line-height: 1.3em
+  
+      .price
+        font-weight: bold
+        
+      q
+        font-style: italic
+        &:before, &:after
+          content: ""
+
+    p.meta
+      margin: 0.15em 0
+    
+      .date
+        background: #CCC
+        color: #555
+        font-size: 0.7em
+        -moz-border-radius: 4px
+        -webkit-border-radius: 4px
+        padding: 0.4em
+        margin: 0
+        text-shadow: #FFF 2px 2px 1px
+      
+        /* Gradual shades from today to a week back
+        &.days-ago-0
+          background: #D9FA2C
+        &.days-ago-1
+          background: #D6F246
+        &.days-ago-2
+          background: #D3EA60
+        &.days-ago-3
+          background: #D0E27A
+        &.days-ago-4
+          background: #CDDA94
+        &.days-ago-5
+          background: #CAD2AE
+        &.days-ago-6
+          background: #C7CAC8
+  
+      .tags
+        font-size: 0.85em
+        &.no-tags
+          color: #CCC
+
+.rating
+  color: #DDD
+
+  strong
+    color: #FFD700
+    font-weight: normal
+
+.drilldown
+  display: none
+  background: #FFF
+
+#facebox
+  &.hoverbox
+    .footer
+      display: none !important
+  &.imagebox
+    .content
+      text-align: center
+      img
+        max-width: 500px

@@ -9,7 +9,7 @@
     %dd
       %p.description= format_description(item.description)
       %p.meta
-        %span.date= item.added
+        %span.date{ date_attributes(item) }= humanize_date(item.added)
         %span.tags
           - if item.tags.any?
             tagged
