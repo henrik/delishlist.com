@@ -1,12 +1,16 @@
-%p
-  Lista för
-  = @user
-  
-%ul
+%dl
   - @list.items.each do |item|
-    %li
+    %dt{ title_attributes(item) }
       %p=link_to(h(item.title), item.url)
-      %p=h item.tags.to_a.join(', ')
+      %p= item.rating
+    %dd
+      %p.description=h item.description
+      %p.meta
+        %span.date= item.added
+        %span.tags
+          - if item.tags.any?
+            tagged
+            =h item.tags.to_a.join(', ')
     
-
-  
+    - # To track when we come to a new rating in rendering the list.
+    - @last_rating = item.rating

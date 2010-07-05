@@ -25,6 +25,8 @@ class Delicious
       results += parse_items
     end
     [@tag_description, results]
+  rescue OpenURI::HTTPError
+    raise NoSuchUser
   end
   
 private
@@ -54,7 +56,10 @@ private
       date_node = li.at(".dateGroup span")
       desc_node = li.at(".description")
       
-      added = Date.parse(date_node[:title]) if date_node
+      if date_node
+        raw_date = date_node[:title].strip.sub(/ (\d\d)$/, ' 20\1')
+        added = Date.parse(raw_date)
+      end
       
       {
         :key         => li[:id].split('-')[1],

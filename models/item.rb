@@ -8,7 +8,7 @@ class Item
   
   RATING_RE = /^\*+$/
   
-  attr_reader :key, :title, :url, :description, :tags, :added
+  attr_reader :key, :title, :url, :description, :rating, :tags, :added
   
   def initialize(hash)
     @key         = hash[:key]
@@ -24,7 +24,16 @@ class Item
     @url.downcase.match(NOT_AN_ITEM_RE) != nil
   end
   
+  def anchor
+    [Slugalizer.slugalize(title), unchanging_anchor].join("__")
+  end
+  
 private
+
+  # Short but likely unique identifier, as part of URL anchors (fragments).
+  def unchanging_anchor
+    self.key[0,6]
+  end
 
   def set_tags_and_rating(tags_and_ratings)
     tags_and_ratings = tags_and_ratings.reject { |t| t.downcase == "wishlist" }

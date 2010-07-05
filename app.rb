@@ -20,12 +20,19 @@ end
 get "/:username" do
   username = params[:username]
   
-  @list = ObjectCache.get_or_set(username, :ttl => CACHE_TTL, :root => CACHE_ROOT) {
-    List.new(username)
-  }
+  begin
 
-  @user = @list.user
-  haml :list
+    @list = ObjectCache.get_or_set(username, :ttl => CACHE_TTL, :root => CACHE_ROOT) {
+      List.new(username)
+    }
+    @user = @list.user
+    haml :list
+
+  rescue Delicious::NoSuchUser
+
+    haml :no_such_user
+
+  end
 end
 
 get "/:user/:tags" do

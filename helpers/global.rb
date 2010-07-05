@@ -11,5 +11,9 @@ helpers do
   def partial(name)
     haml(:"_#{name}", :layout => false)
   end
+  
+  def image_tag(x, y)
+    ""
+  end
 
 end
