@@ -1,8 +1,8 @@
 %dl
   - @list.items.each do |item|
     %dt{ title_attributes(item) }
-      %p=link_to(h(item.title), item.url)
-      %p= item.rating
+      = link_to(h(item.title), referralize(item.url), :class => "title")
+      = item.rating
     %dd
       %p.description=h item.description
       %p.meta

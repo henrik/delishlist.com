@@ -16,4 +16,8 @@ helpers do
     }
   end
   
+  def referralize(url)
+    Amazon::Referralizer.referralize(url, "delishlist-20")
+  end
+  
 end
