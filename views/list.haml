@@ -1,10 +1,13 @@
 %dl
   - @list.items.each do |item|
     %dt{ title_attributes(item) }
+      -# TODO: Thumb.
       = link_to(h(item.title), referralize(item.url), :class => "title")
       = item.rating
+      %span.actions
+        = link_to(image_tag('anchor.png', :alt => "link"), '#'+item.anchor, :class => "anchor", :title => "Link directly to this item")
     %dd
-      %p.description=h item.description
+      %p.description= format_description(item.description)
       %p.meta
         %span.date= item.added
         %span.tags

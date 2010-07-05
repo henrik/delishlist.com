@@ -2,6 +2,7 @@ require "rubygems"
 require "sinatra"
 
 require "haml"
+set :haml, :format => :html5, :attr_wrapper => %{"}
 
 CACHE_TTL = 5 * 60   # 5 minutes
 CACHE_ROOT = "/tmp/cache"

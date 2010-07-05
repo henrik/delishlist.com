@@ -20,4 +20,8 @@ helpers do
     Amazon::Referralizer.referralize(url, "delishlist-20")
   end
   
+  def format_description(description)
+    DescriptionFormatter.new(description).format
+  end
+
 end
