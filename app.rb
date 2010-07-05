@@ -19,23 +19,29 @@ get "/:stylesheet.css" do
 end
 
 get "/:username" do
-  username = params[:username]
-  
-  begin
-
-    @list = ObjectCache.get_or_set(username, :ttl => CACHE_TTL, :root => CACHE_ROOT) {
-      List.new(username)
-    }
-    @user = @list.user
-    haml :list
-
-  rescue Delicious::NoSuchUser
-
-    haml :no_such_user
-
-  end
+  get_list
 end
 
-get "/:user/:tags" do
-  "user is #{params[:user]} and tags are #{params[:tags]}"
+get "/:username/:tags" do
+  @tags = params[:tags].split(/[+ ]/)
+  get_list
+end
+
+
+def get_list
+
+  username = params[:username]
+
+  @list = ObjectCache.get_or_set(username, :ttl => CACHE_TTL, :root => CACHE_ROOT) {
+    List.new(username)
+  }
+  @list.filter_to_tags(@tags) if @tags
+  
+  @user = @list.user
+  haml :list
+
+rescue Delicious::NoSuchUser
+
+  haml :no_such_user
+
 end

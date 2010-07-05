@@ -1,9 +1,11 @@
+- self.title = (@tags ? "#{fancy_tags(@tags, :html => false)} in " : "") + "#{@user.s} delishlist"
+
 %dl
   - @list.items.each do |item|
     %dt{ title_attributes(item) }
       -# TODO: Thumb.
       = link_to(h(item.title), referralize(item.url), :class => "title")
-      = item.rating
+      = rating_link(item)
       %span.actions
         = link_to(image_tag('anchor.png', :alt => "link"), '#'+item.anchor, :class => "anchor", :title => "Link directly to this item")
     %dd
@@ -13,7 +15,7 @@
         %span.tags
           - if item.tags.any?
             tagged
-            =h item.tags.to_a.join(', ')
+            =tags_for(item)
     
     - # To track when we come to a new rating in rendering the list.
     - @last_rating = item.rating

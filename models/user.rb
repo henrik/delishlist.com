@@ -10,7 +10,7 @@ class User
   end
   
   def possessive
-    genitive = name[-1,1] == 's' ? %{'} : %{'s}
+    genitive = name[-1,1] == 's' ? %{’} : %{’s}
     name + genitive
   end
   alias_method :s, :possessive  # "#{@user.s} delishlist"!

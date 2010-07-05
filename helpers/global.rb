@@ -18,5 +18,10 @@ helpers do
     alt = opts[:alt] && %{ alt="#{h opts[:alt]}"}
     %{<img src="/images/#{path}"#{alt}>}
   end
+  
+  # Wrap text in fancy Unicode quotes
+  def q(text)
+    %{“%s”} % text
+  end
 
 end

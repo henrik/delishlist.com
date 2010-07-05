@@ -24,6 +24,19 @@ class Item
     @url.downcase.match(NOT_AN_ITEM_RE) != nil
   end
   
+  
+  def rating
+    @rating || 0
+  end
+  
+  def rating_slug
+    rating.nonzero? ? "*" * rating : "_"
+  end
+  
+  def tags_and_rating
+    tags + Set[rating_slug]
+  end
+  
   def anchor
     [Slugalizer.slugalize(title), unchanging_anchor].join("__")
   end
