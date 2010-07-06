@@ -4,10 +4,7 @@
 #sidebar
 
   = format_list_description(@list.description)
-  %h3#ads Ads
-  -# TODO: Ads
-  =# partial 'ads'
-  
+  = partial :ads
   
 - if @list.empty?
 

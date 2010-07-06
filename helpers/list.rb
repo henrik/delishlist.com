@@ -23,7 +23,7 @@ helpers do
       
       capture_haml do
         haml_tag(:h3, "Note")
-        haml_tag(:p, h(note), :id => "note")
+        haml_tag(:div, nl2br(h(note)), :id => "note")
         
         if address
           haml_tag(:h3, "Address")

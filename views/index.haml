@@ -1,45 +1,25 @@
 - self.title = "Welcome to %s!"
 - self.header = "welcome"
 
-#signdown
+%p    
+  = link_to("Sign up on Delicious", "https://secure.delicious.com/register"), ","
+  add links tagged <code class="tags">wishlist</code>, then point your browser
+  = "(and your %s!)" % link_to("sugar daddy", "http://en.wikipedia.org/wiki/Age_disparity_in_sexual_relationships#Slang_terms")
+  to <code>delishlist.com/<i>username</i></code>.
+  = link_to("See an example!", list_path(:user => "malesca"))
 
-  %h2 Sign down
+#left
 
-  %p
-    Welcome to Delishlist! You can't sign up; we simply mirror bookmarks from
-    = delicious_link, ","
-    wrapped in better presentation.
-  
-  %form{ :action => '', :method => 'get' }
-    %p
-      Want a list?
-      = link_to("Sign up on Delicious", "https://secure.delicious.com/register"), ","
-      add links tagged <code class="tags">wishlist</code>, then point your browser
-      = "(and your %s!)" % link_to("sugar daddy", "http://en.wikipedia.org/wiki/Age_disparity_in_sexual_relationships#Slang_terms")
-      to <code>delishlist.com/</code><input type="text" name="name" id="name" value="username" />.
-    %p
-      You can, of course, view
-      = delicious_link("someone else's wishlist", '/tag/wishlist')
-      even if they never heard of this site.
-      
-    %p
-      For performance reasons, lists are cached for 5 minutes. This means new items or edits may not appear instantly.
-      
-  %h2 Free as in ads
-  
-  %p There are some Google Ads in the sidebar of each list, and Amazon links become referral links (but are not altered on Delicious, of course).
-      
-#features
-
-  %h2 Features
-
-  %dd
+  %dl.features
     %dt Ratings.
-    %dd Tags like <code class="tags">*</code>, <code class="tags">***</code> etc become ratings. Want ratings to go to three stars? Five? Ten? Just tag it that way.
+    %dd
+      %p Tags like <code class="tags">*</code>, <code class="tags">***</code> etc become ratings. Want ratings to go to three stars, or five, or ten? Just tag it that way.
     %dt Sort.
-    %dd Sort the list by highest rating or most recently added.
+    %dd
+      %p Sort the list by highest rating or most recently added.
     %dt Filter by tags.
-    %dd See only things with a tag (like <code class="tags">book</code>) or several (<code class="tags">book+art</code>), just like on Delicious. This can be used for things like per-event lists (<code>/username/wedding</code>) , per-giver lists (<code>/username/parents</code>) or per-event-and-giver: <code>/username/wedding+parents</code>.
+    %dd
+      %p See only things with a tag (like <code class="tags">book</code>) or several (<code class="tags">book+art</code>), just like on Delicious. This can be used for things like per-event lists (<code class="tags">wedding</code>) , per-giver lists (<code class="tags">parents</code>), both (<code class="tags">wedding+parents</code>) or something else entirely.
     -#%dt Live search.
     -#%dd Enter a search string, and only matching (in title, description and tags) items are displayed, live.
     %dt Images.
@@ -52,19 +32,24 @@
         
       %p Hover a thumbnail to show it enlarged; click a thumbnail to make the enlarged image stay put.
       
+
+    
+#right
+
+  %dl.features
     %dt Rich descriptions.
     %dd
-      %p If the description contains something like <code class="example">€12</code> or <code class="example">$12.3 USD</code>, it's assumed to be the price and is emphasized. <code class="example">~250 SEK</code> is fine too, when you want to be vague.
-      %p Quoted sentences in the description are assumed to be quotes from the linked site and are shown in italics.
+      %p If the link description contains something like <code class="example">€12</code> or <code class="example">~$12.3 USD</code>, it's assumed to be the price and is emphasized.
+      %p Quoted sentences in the description, like <code class="example">"An example."</code> are assumed to be quotes from the linked site and are shown in italics.
     %dt Note and address.
     %dd
       %p
         If there is a <code class="tags">wishlist</code> 
-        = delicious_link("tag description", "/help/tagdescriptions"), ","
+        = delicious_link("tag description", "/help/faq#tagDescriptions"), ","
         it's displayed alongside your list as a note. This is a good place to put your size in clothes etc.
       %p If the note contains dates like <code class="example">July 26</code>, a countdown like <code class="example">(in 3 days)</code> will be appended. Good for birthdays and other giftable events.
       %p If the tag description contains a paragraph with <code class="example">Address:</code> as the first line, that address is displayed under a header of its own.
-    %dt Link, edit and clone.
+    %dt Link and edit.
     %dd
       %p Hover the cursor over an item to show the toolbar.
       %p
@@ -74,10 +59,6 @@
       %p
         If you're logged in as this user on Delicious, click
         = image_tag('pencil.png', :alt => 'pencil')
-        for their edit/remove page.
+        for an edit/remove overlay.
       %p
-        If you're logged in on Delicious, click
-        = image_tag('add.png', :alt => 'add')
-        to add the same item to <em>your</em> list.
-      %p
-        Note that you won't see edits and added items on your list until the cache has expired and the page  been reloaded.
+        For performance reasons, lists are cached for 5 minutes. This means new items or edits may not appear instantly.
