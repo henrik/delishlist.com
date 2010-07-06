@@ -1,8 +1,20 @@
+require "rubygems"
+require "rack"
+
+# TODO: Doesn't entity-encode text, so open for XSS. But there's nothing to steal on this domain.
+
 class DescriptionFormatter
   
   CURRENCY_SYMBOL_RE = /[¢£$¥€]/u
   CURRENCY_TLA_RE    = /[A-Z]{3}/
   NUMBER_RE          = /\d(?:[., ]?\d)*/
+  
+  AUTO_LINK_RE = %r{
+          ( https?:// | www\. )
+          [^\s<]+
+        }x
+  BRACKETS = { ']' => '[', ')' => '(', '}' => '{' }
+
   
   attr_reader :description
 
@@ -14,7 +26,40 @@ class DescriptionFormatter
     # It's important to markup quotes first, since HTML attributes add quotes.
     mark_up_quotes
     mark_up_price
+    autolink
     @description
+  end
+  
+  def autolink
+    if @description
+
+      # From Rails 3, http://gist.github.com/358471.
+      @description.gsub!(AUTO_LINK_RE) do
+        href = $&
+        punctuation = []
+        left, right = $`, $'
+        # detect already linked URLs and URLs in the middle of a tag
+        if left =~ /<[^>]+$/ && right =~ /^[^>]*>/
+          # do not change string; URL is already linked
+          href
+        else
+          # don't include trailing punctuation character as part of the URL
+          while href.sub!(/[^\w\/-]$/, '')
+            punctuation.push $&
+            if opening = BRACKETS[punctuation.last] and href.scan(opening).size > href.scan(punctuation.last).size
+              href << punctuation.pop
+              break
+            end
+          end
+
+          link_text = href
+          href = 'http://' + href unless href =~ %r{^[a-z]+://}i
+          
+          %{<a href="#{Rack::Utils.escape_html(href)}">#{Rack::Utils.escape_html(link_text)}</a>} + punctuation.reverse.join('')
+        end
+      end
+
+    end
   end
 
   def mark_up_quotes
@@ -61,8 +106,8 @@ if __FILE__ == $0
     end
     
     def test_format
-      assert_equal '<strong class="price">$123.45 USD</strong>. <q>"Expensive."</q>',
-                   DescriptionFormatter.new('$123.45 USD. "Expensive."').format
+      assert_equal '<strong class="price">$123.45 USD</strong>. <a href="http://x.com/foo?bar=baz#boink">http://x.com/foo?bar=baz#boink</a>. <q>"Expensive."</q>',
+                   DescriptionFormatter.new('$123.45 USD. http://x.com/foo?bar=baz#boink. "Expensive."').format
     end
 
     def test_mark_up_quotes
