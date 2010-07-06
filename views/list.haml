@@ -1,5 +1,10 @@
 - self.title = (@tags ? "#{fancy_tags(@tags, :html => false)} in " : "") + "#{@user.s} delishlist"
 
+#sidebar
+  = format_list_description(@list.description)
+  %h3#ads Ads
+  =# partial 'ads'
+
 %dl
   - @list.items.each do |item|
     %dt{ title_attributes(item) }

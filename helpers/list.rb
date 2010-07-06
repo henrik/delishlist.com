@@ -1,5 +1,27 @@
 helpers do
   
+  ADDRESS_RE = %r{(?:\A|\n\n)Address:\n+(.+?)(?:\n\n|\z)}m
+  
+  def format_list_description(description)
+    if description
+      
+      address = description[ADDRESS_RE, 1]
+      note    = description.sub(ADDRESS_RE, '').strip
+      
+      capture_haml do
+        haml_tag(:h3, "Note")
+        haml_tag(:p, h(note), :id => "note")
+        
+        if address
+          haml_tag(:h3, "Address")
+          haml_tag(:address, h(address).strip.gsub("\n", "<br>"))
+        end
+      end
+      
+    end
+  end
+  
+
   def order_by_rating?
     true  # TODO: Implement.
   end
@@ -20,7 +42,7 @@ helpers do
   def referralize(url)
     Amazon::Referralizer.referralize(url, "delishlist-20")
   end
-  
+    
   def format_description(description)
     DescriptionFormatter.new(description).format
   end
