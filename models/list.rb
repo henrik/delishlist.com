@@ -10,6 +10,11 @@ class List
     @description = description
     @items = items.map { |hash| Item.new(hash) }.reject { |i| i.exclude? }
   end
+  
+  
+  def empty?
+    @items.empty?
+  end
 
 
   def more_than_one_rating?
@@ -17,11 +22,11 @@ class List
   end
 
   def lowest_rating
-    @lowest_rating ||= items.min_by { |i| i.rating }.rating
+    @lowest_rating ||=  items.any? ? items.min_by { |i| i.rating }.rating : nil
   end
 
   def highest_rating
-    @highest_rating ||= items.max_by { |i| i.rating }.rating
+    @highest_rating ||= items.any? ? items.max_by { |i| i.rating }.rating : nil
   end
   
   
