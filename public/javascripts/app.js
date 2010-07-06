@@ -2,6 +2,15 @@ List = (function() {
   return {
     init: function() {
       initFancyDrilldowns();
+      mendAnchors();
+    }
+  }
+
+  function mendAnchors() {
+    var m = location.hash.match(/(__[a-z0-9]{6})$/);
+    if (m && !$(location.hash).length) {
+      var a = $("dt[id$="+m[1]+"]");
+      location.hash = '#' + (a.length ? a.eq(0).attr('id') : 'no-such-item');
     }
   }
   
