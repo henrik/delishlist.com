@@ -1,8 +1,15 @@
 helpers do
   
-  def list_path(user, tag_string=nil)
-    "/#{user.name}" + 
-    (tag_string ? "/#{tag_string}" : "")
+  def list_path(opts={})
+    parts = []
+    parts << "/#{opts[:user] || @user}"
+    
+    tags = opts.has_key?(:tags) ? opts[:tags] : params[:tags]
+    parts << "/#{tags}" if tags
+    
+    by = opts.has_key?(:by) ? opts[:by] : params[:by]
+    parts << "?by=#{by}" if by
+    parts.join
   end
   
 end

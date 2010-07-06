@@ -9,7 +9,7 @@ helpers do
   
   def header
     if @user
-      link_to(h(@user.name), list_path(@user))
+      link_to(h(@user.name), list_path(:tags => nil))
     else
       h(@header)
     end

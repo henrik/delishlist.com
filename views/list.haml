@@ -1,6 +1,8 @@
-- self.title = (@tags ? "#{fancy_tags(@tags, :html => false)} in " : "") + "#{@user.s} delishlist"
+- self.title = (@tags.empty? ? "" : "#{fancy_tags(@tags, :html => false)} in ") + "#{@user.s} delishlist"
+- @search_and_sort = sort_link
 
 #sidebar
+
   = format_list_description(@list.description)
   %h3#ads Ads
   =# partial 'ads'
@@ -22,5 +24,6 @@
             tagged
             =tags_for(item)
     
-    - # To track when we come to a new rating in rendering the list.
+    - # To track when we come to a new section in rendering the list.
     - @last_rating = item.rating
+    - @last_date = item.added

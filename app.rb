@@ -23,7 +23,6 @@ get "/:username" do
 end
 
 get "/:username/:tags" do
-  @tags = params[:tags].split(/[+ ]/)
   get_list
 end
 
@@ -35,7 +34,15 @@ def get_list
   @list = ObjectCache.get_or_set(username, :ttl => CACHE_TTL, :root => CACHE_ROOT) {
     List.new(username)
   }
-  @list.filter_to_tags(@tags) if @tags
+  
+  @tags = params[:tags].to_s.split(/[+ ]/)
+  @list.filter_to_tags(@tags)
+  
+  if params[:by] == 'recent'
+    @list.sort_by_recent
+  else
+    @list.sort_by_rating
+  end
   
   @user = @list.user
   haml :list

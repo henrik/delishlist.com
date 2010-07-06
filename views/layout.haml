@@ -19,6 +19,8 @@
       #title
         %h1= "%s / %s" % [link_to('delishlist', '/'), header]
         %p= "a(n unofficial) %s wishlist" % link_to('Delicious', 'http://delicious.com/')
+      #search-and-sort
+        = @search_and_sort
   
     #content
       = yield

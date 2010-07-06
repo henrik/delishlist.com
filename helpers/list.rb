@@ -2,6 +2,21 @@ helpers do
   
   ADDRESS_RE = %r{(?:\A|\n\n)Address:\n+(.+?)(?:\n\n|\z)}m
   
+  
+  def sort_link
+    return unless @list.more_than_one_rating?
+
+    rating = @list.sorted_by_rating? ? 'rating' : link_to('rating', list_path(:by => nil))
+    recent = @list.sorted_by_recent? ? 'recent' : link_to('recent', list_path(:by => 'recent'))
+    
+    text = "Sort by: #{rating} &bull; #{recent}"
+    
+    capture_haml do
+      haml_tag(:p, text, :id => "sorting")
+    end
+  end
+  
+  
   def format_list_description(description)
     if description
       
@@ -22,17 +37,21 @@ helpers do
   end
   
 
-  def order_by_rating?
-    true  # TODO: Implement.
-  end
-  
   def first_of_its_rating?(item)
     @last_rating && @last_rating != item.rating
+  end
+  
+  def first_of_its_year?(item)
+    @last_date && @last_date.year != item.added.year
+  end
+  
+  def first_in_new_section?(item)
+    @list.sorted_by_recent? ? first_of_its_year?(item) : first_of_its_rating?(item)
   end
 
 
   def title_attributes(item)
-    klass = (order_by_rating? && first_of_its_rating?(item)) ? 'first-in-rating-block' : nil
+    klass = first_in_new_section?(item) ? 'first-in-new-section' : nil
     {
       :id    => item.anchor,
       :class => klass
@@ -94,17 +113,17 @@ helpers do
   
   # TODO: Sorting.
   def tag_link(tag)    
-    if @tags && @tags.any? && !@tags.include?(tag)
+    if @tags.any? && !@tags.include?(tag)
       tags = [tag] + @tags
       tags_string = tags.join('+')
       
-      link = link_to(fancy_tags(tags), list_path(@user, tags_string), :title => "See only items tagged #{q tags_string}")
+      link = link_to(fancy_tags(tags), list_path(:tags => tags_string), :title => "See only items tagged #{q tags_string}")
       drilldown = %{<span class="drilldown">%s</span>} % link
     else
       drilldown = ""
     end
     
-    tag_link = link_to(fancy_tag(tag), list_path(@user, tag), :title => "See only items tagged #{q tag}")
+    tag_link = link_to(fancy_tag(tag), list_path(:tags => tag), :title => "See only items tagged #{q tag}")
     %{<span class="tag-with-drilldown">%s%s</span>} % [tag_link, drilldown]
   end
   
