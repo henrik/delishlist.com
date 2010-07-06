@@ -4,7 +4,7 @@ List = (function() {
       initFancyDrilldowns();
       mendAnchors();
     }
-  }
+  };
 
   function mendAnchors() {
     var m = location.hash.match(/(__[a-z0-9]{6})$/);
@@ -36,6 +36,5 @@ List = (function() {
   
 })();
 
-$(document).ready(function() {
-  List.init();
-});
+
+$(List.init);
