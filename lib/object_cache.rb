@@ -1,3 +1,5 @@
+require 'digest/md5'
+
 class ObjectCache
   
   DEFAULT_TTL = 5 * 60  # 5 minutes
@@ -27,6 +29,10 @@ class ObjectCache
     File.open(path, 'w') { |f| Marshal.dump(value, f) }
   end
   
+  def expire
+    FileUtils.rm_f(path)
+  end
+  
 private
 
   def fresh?
@@ -40,9 +46,15 @@ private
   def exist?
     File.exist?(path)
   end
+  
+  # We work with the MD5 hash since keys like "../foo" would allow for
+  # file system path injection hacks.
+  def key
+    @md5_key ||= Digest::MD5.hexdigest(@key)
+  end
 
   def path
-    @path ||= File.join(@root, @key)
+    @path ||= File.join(@root, key)
   end
   
 end
