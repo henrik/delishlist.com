@@ -49,6 +49,7 @@
     loading_image : '/images/facebox/loading.gif',
     close_image   : '/images/facebox/closelabel.gif',
     caption       : null,
+    reveal_callback : null,
     image_types   : [ 'png', 'jpg', 'jpeg', 'gif' ],
     facebox_html  : '\
   <div id="facebox" style="display:none;"> \
@@ -106,6 +107,9 @@
     $('#facebox .content').append(data)
     $('#facebox .loading').remove()
     $('#facebox .body').children().fadeIn('normal')
+    // HN
+    var cb = $.facebox.settings.reveal_callback
+    if (cb) cb()
   }
 
   $.facebox.close = function() {
@@ -154,7 +158,7 @@
       // iframe
       // Extension by Henrik Nyh <http://henrik.nyh.se> for http://delishlist.com
       } else if (this.href.match(/^https?:\/\//)) {
-        var iframe = '<iframe src="' + this.href + '"></iframe>'
+        var iframe = '<iframe src="' + this.href + '" id="facebox-iframe"></iframe>'
         $.facebox.reveal(iframe, klass)
 
       // ajax

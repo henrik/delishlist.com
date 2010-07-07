@@ -18,6 +18,11 @@ get "/stylesheets/:stylesheet.css" do
   sass :"sass/#{params[:stylesheet]}"
 end
 
+post "/expire_cache" do
+  ObjectCache.new(params[:user], :root => CACHE_ROOT).expire
+  "OK"
+end
+
 get "/:username" do
   get_list
 end
@@ -25,7 +30,6 @@ end
 get "/:username/:tags" do
   get_list
 end
-
 
 def get_list
 

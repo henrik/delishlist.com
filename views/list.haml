@@ -1,6 +1,11 @@
 - self.title = (@tags.empty? ? "" : "#{fancy_tags(@tags, :html => false)} in ") + "#{@user.s} delishlist"
 - @search_and_sort = sort_link
 
+:javascript
+  window.Delishlist = {
+    user: "#{@user}"
+  };
+
 #sidebar
 
   = format_list_description(@list.description)
