@@ -11,5 +11,10 @@ helpers do
     parts << "?by=#{by}" if by
     parts.join
   end
+
+  def delicious_edit_url(item)
+    url = Rack::Utils.escape(item.url)
+    "http://delicious.com/save?url=#{url}#bd"
+  end
   
 end

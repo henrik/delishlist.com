@@ -6,6 +6,7 @@
       = rating_link(item)
       %span.actions
         = link_to(image_tag('anchor.png', :alt => "link"), '#'+item.anchor, :class => "anchor", :title => "Link directly to this item")
+        = link_to(image_tag('pencil.png', :alt => "edit"), h(delicious_edit_url(item)), :class => "edit", :title => "Edit this item on Delicious, if it's yours")
     %dd
       %p.description= format_description(item.description)
       %p.meta

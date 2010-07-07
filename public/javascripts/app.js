@@ -4,9 +4,14 @@ List = (function() {
       initFancyDrilldowns();
       mendAnchors();
       relativizeNoteDates();
+      editInFacebox();
     }
   };
   
+  
+  function editInFacebox() {
+    $('.actions .edit').facebox();
+  }
   
   // TODO: Leap days?
   function relativizeNoteDates() {
