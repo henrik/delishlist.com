@@ -23,17 +23,17 @@ post "/expire_cache" do
   "OK"
 end
 
-get "/:username" do
+get "/:user" do
   get_list
 end
 
-get "/:username/:tags" do
+get "/:user/:tags" do
   get_list
 end
 
 def get_list
 
-  username = params[:username]
+  username = params[:user]
 
   @list = ObjectCache.get_or_set(username, :ttl => CACHE_TTL, :root => CACHE_ROOT) {
     List.new(username)
