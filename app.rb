@@ -4,7 +4,8 @@ require "sinatra"
 require "haml"
 set :haml, :format => :html5, :attr_wrapper => %{"}
 
-CACHE_TTL = 5 * 60   # 5 minutes
+CACHE_MINUTES = 15
+CACHE_TTL = CACHE_MINUTES * 60
 CACHE_ROOT = "/tmp/cache"
 
 Dir["{helpers,models,lib}/**/*.rb"].each { |f| require f }

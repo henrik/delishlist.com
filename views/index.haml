@@ -55,10 +55,10 @@
       %p
         Click the
         = image_tag('anchor.png', :alt => 'anchor')
-        symbol for a link to that specific item.
+        symbol for a link to that specific item, that you can share.
       %p
         If you're logged in as this user on Delicious, click
         = image_tag('pencil.png', :alt => 'pencil')
         for an edit/remove overlay.
       %p
-        For performance reasons, lists are cached for 5 minutes. This means new items or edits may not appear instantly.
+        == (Lists are cached for #{CACHE_MINUTES} minutes, but the cache should expire when you edit or remove from the overlay.)
