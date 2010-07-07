@@ -48,6 +48,7 @@
   $.facebox.settings = {
     loading_image : '/images/facebox/loading.gif',
     close_image   : '/images/facebox/closelabel.gif',
+    caption       : null,
     image_types   : [ 'png', 'jpg', 'jpeg', 'gif' ],
     facebox_html  : '\
   <div id="facebox" style="display:none;"> \
@@ -63,6 +64,7 @@
               <div class="content"> \
               </div> \
               <div class="footer"> \
+                <div class="caption"></div> \
                 <a href="#" class="close"> \
                   <img src="" title="close" class="close_image" /> \
                 </a> \
@@ -189,6 +191,7 @@
 
     $('#facebox .close').click($.facebox.close)
     $('#facebox .close_image').attr('src', $.facebox.settings.close_image)
+    $('#facebox .caption').html($.facebox.settings.caption);
   }
 
   // getPageScroll() by quirksmode.com

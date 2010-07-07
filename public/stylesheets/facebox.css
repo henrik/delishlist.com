@@ -70,6 +70,12 @@
 
 /* Extension by Henrik Nyh <http://henrik.nyh.se> for http://delishlist.com */
 
+#facebox .caption {
+  float: left;
+  font-size: 13px;
+  font-style: italic;
+}
+
 #facebox .footer {
  border-top: none;
  margin-top: 5px;

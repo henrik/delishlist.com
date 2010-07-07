@@ -10,7 +10,7 @@ List = (function() {
   
   
   function editInFacebox() {
-    $('.actions .edit').facebox();
+    $('.actions .edit').facebox({ caption: "The ”Delete” link is in the top right. Focus a text field (not ”Notes”) and press Enter/Return to submit an edit." });
   }
   
   // TODO: Leap days?
