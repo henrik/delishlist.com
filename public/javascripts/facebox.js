@@ -158,7 +158,7 @@
       // iframe
       // Extension by Henrik Nyh <http://henrik.nyh.se> for http://delishlist.com
       } else if (this.href.match(/^https?:\/\//)) {
-        var iframe = '<iframe src="' + this.href + '" id="facebox-iframe"></iframe>'
+        var iframe = '<iframe src="' + this.href + '"></iframe>'
         $.facebox.reveal(iframe, klass)
 
       // ajax
