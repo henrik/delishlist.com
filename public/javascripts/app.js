@@ -5,18 +5,37 @@ List = (function() {
       mendAnchors();
       relativizeNoteDates();
       editInFacebox();
+      thumbsInFacebox();
       removeBrokenThumbnails();
     }
   };
+  
+  function thumbsInFacebox() {
+    $('.thumbnail img').css({cursor: '-moz-zoom-in' }).hover(function() {
+      if (stickyFaceboxIsOpen()) return;
+      $.facebox.closeImmediately();
+      $.facebox('<img src="'+this.src+'" alt="" />', 'imagebox hoverbox');
+    }, function() {
+      if (stickyFaceboxIsOpen()) return;
+      $.facebox.close();
+    }).click(function() {
+      $.facebox('<a href="'+this.src+'" target="_blank"><img src="'+this.src+'" alt=""></a>', 'imagebox');
+    });
+    
+    function stickyFaceboxIsOpen() { return $("#facebox:not(.hoverbox):visible").length };
+  }
+
   
   function removeBrokenThumbnails() {
     $(".thumbnail img").error(function() { $(this).remove() });
   }
   
   function editInFacebox() {
+    // The Facebox code is such that settings apply per page, not per event binding, so we're jumping through
+    // ugly hoops for the reveal_callback and caption not to show in the image Facebox.
     $('.actions .edit').facebox({
       reveal_callback: function() {
-        $('#facebox iframe').load(function() {
+        $('#facebox:not(.imagebox) iframe').load(function() {
           if (this.delishlist_hasLoaded) {
             // Not first load event = navigated in iframe = probably edited or deleted. Expire cache!
             $.post('/expire_cache', { user: Delishlist.user });

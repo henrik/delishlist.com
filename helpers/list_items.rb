@@ -80,7 +80,6 @@ helpers do
     item.tags.sort.map { |tag| tag_link(tag) }.join(", ")
   end
   
-  # TODO: Sorting.
   def tag_link(tag)    
     if @tags.any? && !@tags.include?(tag)
       tags = [tag] + @tags

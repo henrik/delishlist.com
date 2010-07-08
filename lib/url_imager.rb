@@ -9,7 +9,7 @@ class URLImager
   TRANSFORMATIONS = [
   
     # Amazon: ISBN-10 or ASIN. Will return an 1x1 blank GIF on failure.
-    [%r{https?://(?:.+\.)?(?:amazon\.|amzn\.com\b).+?\b([0-9A-Z]{10})\b},  lambda { |isbn| "http://images.amazon.com/images/P/#{isbn}.01.THUMBZZZ.jpg" }],
+    [%r{https?://(?:.+\.)?(?:amazon\.|amzn\.com\b).+?\b([0-9A-Z]{10})\b},  lambda { |isbn| "http://images.amazon.com/images/P/#{isbn}.01.MEDIUM.jpg" }],
       
     [%r{http://store\.apple\..*?/product/(MB\d+)},               lambda { |id| "http://storeimages.apple.com/1413/as-images.apple.com/is/image/AppleInc/#{id}" }],
     [%r{http://www\.bokus\.com/b(?:ok)?/(\d+)},                  lambda { |isbn| "http://image.bokus.com/images2/#{isbn}_large" }],
