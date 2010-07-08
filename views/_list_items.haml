@@ -1,7 +1,7 @@
 %dl.list
   - @list.items.each do |item|
     %dt{ title_attributes(item) }
-      -# TODO: Thumb.
+      .thumbnail= item_image(item)
       = link_to(h(item.title), referralize(item.url), :class => "title")
       = rating_link(item)
       %span.actions

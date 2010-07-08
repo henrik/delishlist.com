@@ -30,6 +30,12 @@ helpers do
   end
   
   
+  def item_image(item)
+    image = Image.build(item, @user)
+    image && image_tag(image)
+  end
+  
+  
   # Date
   
   def date_attributes(item)

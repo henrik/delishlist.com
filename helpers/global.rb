@@ -15,8 +15,8 @@ helpers do
   end
   
   def image_tag(path, opts={})
-    alt = opts[:alt] && %{ alt="#{h opts[:alt]}"}
-    %{<img src="/images/#{path}"#{alt}>}
+    path = path.include?("://") ? path : "/images/#{path}"
+    %{<img src="#{path}" alt="#{h opts[:alt]}">}
   end
   
   # Wrap text in fancy Unicode quotes
