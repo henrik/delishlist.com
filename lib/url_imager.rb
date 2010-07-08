@@ -11,17 +11,20 @@ class URLImager
     # Amazon: ISBN-10 or ASIN. Will return an 1x1 blank GIF on failure.
     [%r{https?://(?:.+\.)?(?:amazon\.|amzn\.com\b).+?\b([0-9A-Z]{10})\b},  lambda { |isbn| "http://images.amazon.com/images/P/#{isbn}.01.THUMBZZZ.jpg" }],
       
-    [%r{http://store\.apple\..*?/product/(MB\d+)},         lambda { |id| "http://storeimages.apple.com/1413/as-images.apple.com/is/image/AppleInc/#{id}" }],
-    [%r{http://www\.bokus\.com/b(?:ok)?/(\d+)},            lambda { |isbn| "http://image.bokus.com/images2/#{isbn}_large" }],
-    [%r{http://www\.adlibris\.com/.*?\?isbn=(\d+)},        lambda { |isbn| "http://www.adlibris.com/se/covers/M/#{isbn[0,1]}/#{isbn[1..2]}/#{isbn}.jpg" }],
-    [%r{http://www\.cafepress\..*?(\d{5,})},               lambda { |id| "http://images8.cpcache.com/product/#{id}v2_350x350.jpg" }],
-    [%r{http://www\.worldofboardgames\.com/.*?ID=(\d+)},   lambda { |id| "http://www.worldofboardgames.com/bgimages/#{id}-1-Medium.jpg" }],
-    [%r{^http://www\.uncommongoods\.com/.*?itemId=(\d+)},  lambda { |id| "http://www.uncommongoods.com/images/product/#{id}_sm.jpg" }],
-    [%r{^http://www\.threadless\.com/product/(\d+)},       lambda { |id| "http://media.threadless.com/product/#{id}/minizoom.jpg" }],
-    [%r{^http://www\.webhallen\.com/.*?/(\d{5,})},         lambda { |id| "http://images.webhallen.com/product/#{id}" }],
-    [%r{^http://www.play.com/.+?/(\d{5,})\b},              lambda { |id| "http://images.play.com/covers/#{id}s.jpg" }],
-    [%r{^http://(?:www\.)?pragprog\.com/titles/(\w+)},     lambda { |id| "http://www.pragprog.com/images/covers/190x228/#{id}.jpg" }],
-    [%r{^http://www\.prisjakt\.nu/produkt\.php\?p=(\d+)},  lambda { |id| "http://www.prisjakt.nu/bilder/bild.php?p=#{id}" }],
+    [%r{http://store\.apple\..*?/product/(MB\d+)},               lambda { |id| "http://storeimages.apple.com/1413/as-images.apple.com/is/image/AppleInc/#{id}" }],
+    [%r{http://www\.bokus\.com/b(?:ok)?/(\d+)},                  lambda { |isbn| "http://image.bokus.com/images2/#{isbn}_large" }],
+    [%r{http://www\.adlibris\.com/.*?\?isbn=(\d+)},              lambda { |isbn| "http://www.adlibris.com/se/covers/M/#{isbn[0,1]}/#{isbn[1..2]}/#{isbn}.jpg" }],
+    [%r{http://www\.cafepress\..*?(\d{5,})},                     lambda { |id| "http://images8.cpcache.com/product/#{id}v2_350x350.jpg" }],
+    [%r{http://www\.worldofboardgames\.com/.*?ID=(\d+)},         lambda { |id| "http://www.worldofboardgames.com/bgimages/#{id}-1-Medium.jpg" }],
+    [%r{^http://www\.uncommongoods\.com/.*?itemId=(\d+)},        lambda { |id| "http://www.uncommongoods.com/images/product/#{id}_sm.jpg" }],
+    [%r{^http://www\.threadless\.com/product/(\d+)},             lambda { |id| "http://media.threadless.com/product/#{id}/minizoom.jpg" }],
+    [%r{^http://www\.webhallen\.com/.*?/(\d{5,})},               lambda { |id| "http://images.webhallen.com/product/#{id}" }],
+    [%r{^http://www.play.com/.+?/(\d{5,})\b},                    lambda { |id| "http://images.play.com/covers/#{id}s.jpg" }],
+    [%r{^http://(?:www\.)?pragprog\.com/titles/(\w+)},           lambda { |id| "http://www.pragprog.com/images/covers/190x228/#{id}.jpg" }],
+    [%r{^http://www\.prisjakt\.nu/produkt\.php\?p=(\d+)},        lambda { |id| "http://www.prisjakt.nu/bilder/bild.php?p=#{id}" }],
+    [%r{^http://www\.sephora\.com/.*/product\.jhtml\?id=(\w+)},  lambda { |id| "http://www.sephora.com/assets/dyn/product/#{id}/#{id}_hero.jpg" }],
+    [%r{^http://www\.bokia\.se/bok/(\d+)},                       lambda { |id| "http://www.bokia.se/jackets/medium/#{id[-2..-1]}/#{id}.jpg" }],
+    [%r{^http://thehollywoodcollection\.stores\.yahoo\.net/(\w+)\.html},  lambda { |id| "http://www.thehollywoodcollection.com/Images/#{id}.jpg" }],
 
     # ISBN catchall.
     [%r{[&?]isbn=([0-9A-Z]{10,13})}i,  lambda { |isbn| "http://covers.librarything.com/devkey/#{LIBRARYTHING_DEVKEY}/medium/isbn/#{isbn}" }]

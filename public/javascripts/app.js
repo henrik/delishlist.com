@@ -5,9 +5,13 @@ List = (function() {
       mendAnchors();
       relativizeNoteDates();
       editInFacebox();
+      removeBrokenThumbnails();
     }
   };
   
+  function removeBrokenThumbnails() {
+    $(".thumbnail img").error(function() { $(this).remove() });
+  }
   
   function editInFacebox() {
     $('.actions .edit').facebox({
