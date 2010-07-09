@@ -1,3 +1,6 @@
+require "rubygems"
+require "sinatra"
+
 require "#{File.dirname(__FILE__)}/setup.rb"
 
 get "/" do
