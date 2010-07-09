@@ -66,4 +66,4 @@
         = image_tag('pencil.png', :alt => 'edit')
         for an edit/remove overlay.
       %p
-        == (Lists are cached for #{CACHE_MINUTES} minutes, but the cache should expire when you edit or remove from the overlay.)
+        == (Lists are cached for #{settings.cache_minutes} minutes, but the cache should expire when you edit or remove from the overlay.)

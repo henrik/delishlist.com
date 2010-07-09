@@ -4,11 +4,18 @@ require "sinatra"
 require "haml"
 set :haml, :format => :html5, :attr_wrapper => %{"}
 
-CACHE_MINUTES = 15
-CACHE_TTL = CACHE_MINUTES * 60
-CACHE_ROOT = "/tmp/cache"
+cache_minutes = 15  # Since we can't reference settings from each other.
+set :cache_minutes, cache_minutes
+set :cache_seconds, cache_minutes * 60
+
+if ENV['RACK_ENV'] == 'production'
+  set :cache_root, "#{File.dirname(__FILE__)}/../shared/cache"
+else
+  set :cache_root, "/tmp/delishlist"
+end
 
 Dir["{helpers,models,lib}/**/*.rb"].each { |f| require f }
+
 
 get "/" do
   haml :index, :layout => :layout
@@ -20,7 +27,7 @@ get "/stylesheets/:stylesheet.css" do
 end
 
 post "/expire_cache" do
-  ObjectCache.new(params[:user], :root => CACHE_ROOT).expire
+  ObjectCache.new(params[:user], :root => settings.cache_root).expire
   "OK"
 end
 
@@ -36,7 +43,7 @@ def get_list
 
   username = params[:user]
 
-  @list = ObjectCache.get_or_set(username, :ttl => CACHE_TTL, :root => CACHE_ROOT) {
+  @list = ObjectCache.get_or_set(username, :ttl => settings.cache_seconds, :root => settings.cache_root) {
     List.new(username)
   }
   
