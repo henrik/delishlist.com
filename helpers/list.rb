@@ -6,7 +6,7 @@ helpers do
     return unless @list.more_than_one_rating?
 
     rating = @list.sorted_by_rating? ? 'rating' : link_to('rating', list_path(:by => nil))
-    recent = @list.sorted_by_recent? ? 'recent' : link_to('recent', list_path(:by => 'recent'))
+    recent = @list.sorted_by_recent? ? 'recent' : link_to('recent', list_path(:by => List::ORDER_RECENT))
     
     text = "Sort by: #{rating} &bull; #{recent}"
     

@@ -1,4 +1,6 @@
 class List
+  
+  ORDER_RECENT = 'recent'
 
   attr_reader :user, :description, :items
   

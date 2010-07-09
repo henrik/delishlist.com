@@ -50,7 +50,7 @@ def get_list
   @tags = params[:tags].to_s.split(/[+ ]/)
   @list.filter_to_tags(@tags)
   
-  if params[:by] == 'recent'
+  if params[:by] == List::ORDER_RECENT
     @list.sort_by_recent
   else
     @list.sort_by_rating
