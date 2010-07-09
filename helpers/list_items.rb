@@ -31,8 +31,8 @@ helpers do
   
   
   def item_image(item)
-    image = Image.build(item, @user)
-    image && image_tag(image)
+    url = Image.image_url_for_item_and_user(item, @user)
+    url && image_tag(url)
   end
   
   
