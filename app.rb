@@ -1,5 +1,8 @@
 require "rubygems"
-require 'vendor/sinatra/lib/sinatra'  # Not pre-installed on Dreamhost.
+
+# Not pre-installed on Dreamhost.
+require 'vendor/sinatra/lib/sinatra'
+require 'vendor/json_pure/lib/json'
 
 require "#{File.dirname(__FILE__)}/setup.rb"
 
