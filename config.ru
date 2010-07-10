@@ -3,6 +3,10 @@
 if ENV['RACK_ENV'] == 'production'
   ENV['GEM_HOME'] = '/home/delish/.gems'
   ENV['GEM_PATH'] = '$GEM_HOME:/usr/lib/ruby/gems/1.8'
+  
+  log = File.new("log/sinatra.log", "w")
+  $stdout.reopen(log)
+  $stderr.reopen(log)
 end
 
 require 'app.rb'
