@@ -1,5 +1,7 @@
+# We need these in app.rb or "ruby app.rb" won't work, and need them here
+# or e.g. "irb -r setup" won't work.
 require "rubygems"
-require "sinatra"
+require 'vendor/sinatra/lib/sinatra'  # Not pre-installed on Dreamhost.
 
 cache_minutes = 15  # Since we can't reference settings from each other.
 set :cache_minutes, cache_minutes
