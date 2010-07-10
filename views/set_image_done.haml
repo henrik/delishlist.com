@@ -2,4 +2,6 @@
 - head do
   :javascript
     window.Delishlist = #{ { :url => @image_url, :id => @id }.to_json };
-%p Setting…
+
+- unless @image_url.blank?
+  = image_tag(@image_url, :alt => "")
