@@ -3,8 +3,7 @@ helpers do
   attr_writer :header
 
   def title
-    format = @page_title || "%s"
-    h(format % "Delishlist")
+    h(@page_title) || "Delishlist"
   end
   
   def title=(title)
