@@ -1,14 +1,8 @@
-# Add vendorized gems to load path.
-Dir["#{File.dirname(__FILE__)}/vendor/*"].each do |dir| 
-  path = File.directory?(lib = "#{dir}/lib") ? lib : dir
-  $:.unshift(path)
-end
-
+require "rubygems"
 require "sinatra"
 require "json"
-
-require "rubygems"
 require "haml"
+require "sass"
 require "active_record"
 
 cache_minutes = 15  # Since we can't reference settings from each other.
