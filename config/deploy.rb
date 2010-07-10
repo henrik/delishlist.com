@@ -6,7 +6,7 @@ default_run_options[:pty] = true
 
 set :user, 'delish'
 set :domain, 'delishlist.com'
-set :tempdomain, '83.250.124.96'  # Until DNS is changed.
+set :tempdomain, '208.113.197.144'  # Until DNS is changed.
 
 # cap deploy:cleanup
 set :keep_releases, 5
