@@ -2,7 +2,7 @@
   - @list.items.each do |item|
     %dt{ title_attributes(item) }
       .thumbnail= item_image(item)
-      = link_to(h(item.title), referralize(item.url), :class => "title")
+      = link_to(h(TitleImprover.improve_title(item.title)), referralize(item.url), :class => "title")
       = rating_link(item)
       %span.actions
         = link_to(image_tag('anchor.png', :alt => "link"), '#'+item.anchor, :class => "anchor", :title => "Link directly to this item")
