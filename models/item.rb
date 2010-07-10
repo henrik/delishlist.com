@@ -12,7 +12,7 @@ class Item
   
   def initialize(hash)
     @key         = hash[:key]
-    @title       = hash[:title]
+    @title       = TitleImprover.improve_title(hash[:title])
     @url         = hash[:url]
     @description = hash[:description]
     @added       = hash[:added]
