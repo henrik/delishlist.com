@@ -17,7 +17,7 @@ end
 get '/:user/set_image' do
   setup_image
   @image = Image.new(:image_url => Image.image_url_for_item_url_and_user(@url, @user))
-  haml :set_image, :layout => :set_image_layout
+  haml :set_image, :layout => :'layout/set_image'
 end
 
 post '/:user/set_image' do
@@ -25,9 +25,9 @@ post '/:user/set_image' do
   
   @image = Image.new(:item_url => @url, :image_url => params[:image_url], :username => @user.name, :ip => request.ip)
   if @image.save
-    haml :set_image_done, :layout => :set_image_layout
+    haml :set_image_done, :layout => :'layout/set_image'
   else
-    haml :set_image, :layout => :set_image_layout
+    haml :set_image, :layout => :'layout/set_image'
   end
 end
 
