@@ -10,7 +10,7 @@ set :cache_minutes, cache_minutes
 set :cache_seconds, cache_minutes * 60
 
 if ENV['RACK_ENV'] == 'production'
-  share_dir = "#{File.dirname(__FILE__)}/../shared/cache"
+  share_dir = "/home/delish/delishlist.com/shared"
 else
   share_dir = "/tmp/delishlist"
   FileUtils.mkdir_p share_dir
