@@ -4,7 +4,7 @@ require "timeout"
 require "rubygems"
 require "rack"
 require "hpricot"
-require "json"  # TODO: vendor?
+require "json"
 
 class ImageScraper
   TIMEOUT = 8  # seconds
