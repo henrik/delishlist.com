@@ -2,7 +2,7 @@
 - self.header = "welcome"
 
 %p    
-  = link_to("Sign up on Delicious", "https://secure.delicious.com/register"), ","
+  = link_to("Sign up on Delicious", "https://secure.delicious.com/register") + ","
   add links tagged <code class="tags">wishlist</code>, then point your browser
   = "(and your %s)" % link_to("sugar daddy", "http://en.wikipedia.org/wiki/Age_disparity_in_sexual_relationships#Slang_terms")
   to <code>delishlist.com/<i>username</i></code>.
@@ -51,7 +51,7 @@
     %dd
       %p
         If there is a <code class="tags">wishlist</code> 
-        = delicious_link("tag description", "/help/faq#tagDescriptions"), ","
+        = delicious_link("tag description", "/help/faq#tagDescriptions") + ","
         it's displayed alongside your list as a note. This is a good place to put your size in clothes etc.
       %p If the note contains dates like <code class="example">July 26</code>, a countdown like <code class="example">(in 3 days)</code> will be appended. Good for birthdays and other giftable events.
       %p If the tag description contains a paragraph with <code class="example">Address:</code> as the first line, that address is displayed under a header of its own.

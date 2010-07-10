@@ -15,7 +15,7 @@
   - if @tags.empty?
     %p
       Sorry, this user doesn't have anything tagged <code class="tags">wishlist</code> on
-      = delicious_link , "."
+      = delicious_link + "."
   - else
     %p== Sorry, this user doesn't have anything tagged <code class="tags">#{fancy_tags(["wishlist"]+@tags)}</code> on #{delicious_link}.
 
