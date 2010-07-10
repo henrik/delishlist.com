@@ -27,20 +27,20 @@
       %input{ :type => 'submit', :value => 'save' }
       %span.footnote Your IP address is logged in case of abuse.
     
-      #found_on_site.suggestions.scraped
-        %h2
-          images found on
-          = set_image_url_link(@url)
+    #found_on_site.suggestions.scraped
+      %h2
+        images found on
+        = set_image_url_link(@url)
+      .images Loading…
+
+    - unless @title.blank?
+      #giigle.suggestions.scraped
+        %h2== google images matches for #{set_image_giigle_link(@title)}
         .images Loading…
 
-      - unless @title.blank?
-        #giigle.suggestions.scraped
-          %h2== google images matches for #{set_image_giigle_link(@title)}
-          .images Loading…
-
-      - if @previous_image_urls.any?
-        #previously.suggestions
-          %h2 images used previously
-          .images        
-            - @previous_image_urls.each do |url|
-              = link_to(image_tag(url, :alt => "", :title => "Use this image"), url)
+    - if @previous_image_urls.any?
+      #previously.suggestions
+        %h2 images used previously
+        .images        
+          - @previous_image_urls.each do |url|
+            = link_to(image_tag(url, :alt => "", :title => "Use this image"), url)
