@@ -8,12 +8,12 @@
   =h q(truncate(@title, 45))  
 %hr
   
-#content
+#content{ :class => ('errors' if @image.errors.any?) }
 
   #preview
     .container
-      - unless @image_url.blank?
-        = image_tag(@image_url)
+      - unless @image.errors.any? || @image.image_url.blank?
+        = image_tag(@image.image_url)
   
   %p This image will be used on every wishlist containing this item, unless overridden there.
 
@@ -21,7 +21,7 @@
 
     %p.url
       %label{ :for => 'url' } image url
-      %input{ :type => 'text', :name => 'url', :id => 'url', :value => @image_url }
+      %input{ :type => 'text', :name => 'image_url', :id => 'url', :value => @image.image_url }
 
     %p
       %input{ :type => 'submit', :value => 'save' }

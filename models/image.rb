@@ -1,5 +1,8 @@
 class Image < ActiveRecord::Base
   
+  validates_format_of :image_url, :with => %r{\Ahttps?://}, :allow_blank => true
+  validates_presence_of :item_url, :username, :ip
+  
   def self.image_url_for_item_and_user(item, user)
     image_url_for_item_url_and_user(item.url, user)
   end

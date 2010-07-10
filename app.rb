@@ -15,19 +15,30 @@ get "/stylesheets/:stylesheet.css" do
   sass :"sass/#{params[:stylesheet]}"
 end
 
+
 get '/:user/set_image' do
-  @user = User.new(params[:user])
-  @title, @url, @id = params.values_at(:title, :url, :id)
-  @image_url = Image.image_url_for_item_url_and_user(@url, @user)
-  @previous_image_urls = Image.suggestions_for_url(@url)
+  setup_image
+  @image = Image.new(:image_url => Image.image_url_for_item_url_and_user(@url, @user))
   haml :set_image, :layout => :set_image_layout
 end
 
 post '/:user/set_image' do
-  @id = params[:id]
-  @image_url = params[:url]
-  haml :set_image_done, :layout => :set_image_layout
+  setup_image
+  
+  @image = Image.new(:item_url => @url, :image_url => params[:image_url], :username => @user.name, :ip => request.ip)
+  if @image.save
+    haml :set_image_done, :layout => :set_image_layout
+  else
+    haml :set_image, :layout => :set_image_layout
+  end
 end
+
+def setup_image
+  @user = User.new(params[:user])
+  @title, @url, @id = params.values_at(:title, :url, :id)
+  @previous_image_urls = Image.suggestions_for_url(@url)
+end
+
 
 get '/scrape_images' do
   content_type 'application/json', :charset => 'utf-8'
@@ -38,6 +49,7 @@ post "/expire_cache" do
   ObjectCache.new(params[:user], :root => settings.cache_root).expire
   "OK"
 end
+
 
 get "/:user" do
   get_list
