@@ -23,7 +23,11 @@ helpers do
   end
 
   def partial(name)
-    haml(:"_#{name}", :layout => false)
+    parts = name.to_s.split('/')
+    parts.last.sub!(/\A/, '_')
+    path = parts.join('/')
+
+    haml(path.to_sym, :layout => false)
   end
   
   def image_tag(path, opts={})
