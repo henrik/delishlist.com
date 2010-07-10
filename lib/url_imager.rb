@@ -32,6 +32,7 @@ class URLImager
   ]
   
   def self.image_url(url)
+    url = url.to_s
     TRANSFORMATIONS.each do |re, lambda|
       return lambda.call($1) if url.match(re)
     end
