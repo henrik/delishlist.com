@@ -34,7 +34,7 @@ List = (function() {
   }
   
   function removeBrokenThumbnails($images) {
-    $images.error(function() { $(this).parent().remove() });
+    $images.error(function() { $(this).remove() });
   }
   
   // E.g. Amazon will return tiny blank images on failure.
@@ -42,7 +42,7 @@ List = (function() {
     $images.load(function() {
       var size = getNaturalSize(this);
       if (size.width < 10 || size.height < 10) {
-        $(this).parent().remove();
+        $(this).remove();
       }
     });
   }

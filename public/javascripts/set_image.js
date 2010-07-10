@@ -6,7 +6,6 @@ SetImage = (function() {
     },
 
     initSelecting: function() {
-      console.log("init selecting");
       scrape(window.Delishlist.url, 'found_on_site');
       scrape(window.Delishlist.title, 'giigle');
       makeImagesPreviewable();
@@ -14,7 +13,6 @@ SetImage = (function() {
     },
     
     initSelected: function() {
-      console.log("init selected");
       if (window.top == window) return;
       $top = window.top.jQuery;
       var $thumb = $top("#"+Delishlist.id+"_thumb");
@@ -37,7 +35,7 @@ SetImage = (function() {
     if (!url) return;
     $.getJSON("/scrape_images?url="+encodeURIComponent(url), function(urls) {
       if (urls.length) {
-        var images = $.map(urls, function (u) {
+        var images = $.map(urls, function(u) {
           return '<a href="'+u+'"><img src="'+u+'" alt="" title="Use this image"></a>';
         });
         $("#"+id+" .images").html(images.join(" ")).

@@ -1,7 +1,7 @@
 - self.title = "Image has been set"
 - head do
   :javascript
-    window.Delishlist = #{ { :url => @image_url, :id => @id }.to_json };
+    window.Delishlist = #{ { :url => @image.image_url, :id => @id }.to_json };
 
-- unless @image_url.blank?
-  = image_tag(@image_url, :alt => "")
+- unless @image.image_url.blank?
+  = image_tag(@image.image_url, :alt => "")
