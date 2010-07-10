@@ -1,0 +1,68 @@
+body
+  padding: 20px
+  
+h1
+  font-size: 1.6em
+  font-weight: normal
+  margin-top: 0
+
+h2
+  font-size: 1em
+  
+hr
+  background-color: #EEE
+  border: 1px solid #CCC
+  border-width: 1px 0 0
+  height: 0.4em
+  margin: 0 0 0.33em 0
+  
+#content
+  margin: 0
+  padding: 0
+
+#preview
+  float: right
+  height: 100px
+  width: 100px
+  // We can't float the table-cell or the valign breaks.
+  .container
+    height: 100px
+    width: 100px
+    display: table-cell
+    text-align: center
+    vertical-align: middle
+    padding: 0
+    img
+      max-height: 90px
+      max-width: 90px
+
+.footnote
+  font-size: 0.8em
+  
+form
+  .footnote
+    margin-left: 0.5em
+  label
+    margin-right: 0.5em
+  p.url
+    input
+      width: 70%
+
+.suggestions
+  .images
+    background: #F3F3F3
+    border: 1px solid #AAA
+    padding: 5px
+    height: 75px
+    overflow-y: auto
+    img
+      max-height: 50px
+      max-width: 150px
+      border: 1px solid #CCC
+      &:hover
+        border-color: #777
+
+#updated
+  display: table-cell
+  text-align: center
+  vertical-align: middle

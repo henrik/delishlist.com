@@ -4,10 +4,22 @@ helpers do
     Rack::Utils.escape_html(text)
   end
   
+  def tag(name, attributes={})
+    "<#{name}#{attribute_string(attributes)}>"
+  end
+  
+  def content_tag(name, content, attributes={})
+    "<#{name}#{attribute_string(attributes)}>#{content}</#{name}>"
+  end
+  
+  def attribute_string(attributes)
+    attributes.empty? ? "" : " #{attributes.map {|k,v| %{#{k}="#{h v}"} }.join(' ')}"
+  end
+  private :attribute_string
+  
   def link_to(text, url, opts={})
-    klass = opts[:class] && %{ class="#{h opts[:class]}"}
-    title = opts[:title] && %{ title="#{h opts[:title]}"}
-    %{<a href="#{h url}"#{klass}#{title}>#{text}</a>}
+    opts[:href] = url
+    content_tag(:a, text, opts)
   end
 
   def partial(name)
@@ -15,13 +27,21 @@ helpers do
   end
   
   def image_tag(path, opts={})
-    path = path.include?("://") ? path : "/images/#{path}"
-    %{<img src="#{path}" alt="#{h opts[:alt]}">}
+    src = path.include?("://") ? path : "/images/#{path}"  
+    alt = opts[:alt] || ""
+    tag(:img, opts.merge(:src => src, :alt => alt))
   end
   
   # Wrap text in fancy Unicode quotes
   def q(text)
     %{“%s”} % text
+  end
+  
+  def truncate(text, length = 30, truncate_string = "…")
+    if text
+      l = length - truncate_string.length
+      (text.length > length ? text[0...l] + truncate_string : text).to_s
+    end
   end
   
   def nl2br(text)

@@ -1,0 +1,46 @@
+- self.title = "Set image for #{q truncate(@title, 50)}"
+- head do
+  :javascript
+    window.Delishlist = #{ { :url => @url, :title => @title }.to_json };
+
+%h1
+  set image for
+  =h q(truncate(@title, 45))  
+%hr
+  
+#content
+
+  #preview
+    .container
+      - unless @image_url.blank?
+        = image_tag(@image_url)
+  
+  %p This image will be used on every wishlist containing this item, unless overridden there.
+
+  %form{ :method => 'post', :action => '' }
+
+    %p.url
+      %label{ :for => 'url' } image url
+      %input{ :type => 'text', :name => 'url', :id => 'url', :value => @image_url }
+
+    %p
+      %input{ :type => 'submit', :value => 'save' }
+      %span.footnote Your IP address is logged in case of abuse.
+    
+      #found_on_site.suggestions.scraped
+        %h2
+          images found on
+          = set_image_url_link(@url)
+        .images Loading…
+
+      - unless @title.blank?
+        #giigle.suggestions.scraped
+          %h2== google images matches for #{set_image_giigle_link(@title)}
+          .images Loading…
+
+      - if @previous_image_urls.any?
+        #previously.suggestions
+          %h2 images used previously
+          .images        
+            - @previous_image_urls.each do |url|
+              = link_to(image_tag(url, :alt => "", :title => "Use this image"), url)

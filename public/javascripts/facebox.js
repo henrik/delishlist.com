@@ -42,7 +42,7 @@
   $.facebox = function(data, klass) {  // Modified by HN to pass on klass
     $.facebox.init()
     $.facebox.loading()
-    $.isFunction(data) ? data.call() : $.facebox.reveal(data, klass)
+    $.isFunction(data) ? data.call() : $.facebox.reveal(data, {klass:klass})
   }
 
   $.facebox.settings = {
@@ -100,15 +100,19 @@
     })
   }
 
-  $.facebox.reveal = function(data, klass) {
-    // modified by HN to add klass to #facebox, not .content
+  $.facebox.reveal = function(data, local_settings) {
+
+    klass = local_settings && local_settings.klass
     $('#facebox').removeClass()
     if (klass) $('#facebox').addClass(klass)
+    
+    $('#facebox .caption').html(local_settings ? local_settings.caption : $.facebox.settings.caption);
+    
     $('#facebox .content').append(data)
     $('#facebox .loading').remove()
     $('#facebox .body').children().fadeIn('normal')
-    // HN
-    var cb = $.facebox.settings.reveal_callback
+    
+    var cb = local_settings ? local_settings.reveal_callback : $.facebox.settings.reveal_callback
     if (cb) cb()
   }
 
@@ -128,7 +132,7 @@
     return false
   }
 
-  $.fn.facebox = function(settings) {
+  $.fn.facebox = function(settings, local_settings) {
     $.facebox.init(settings)
 
     var image_types = $.facebox.settings.image_types.join('|')
@@ -136,22 +140,18 @@
 
     function click_handler() {
       $.facebox.loading(true)
-
-      // support for rel="facebox[.inline_popup]" syntax, to add a class
-      var klass = this.rel.match(/facebox\[\.(\w+)\]/)
-      if (klass) klass = klass[1]
       
       // div
       if (this.href.match(/^#/)) {
         var url    = window.location.href.split('#')[0]
         var target = this.href.replace(url,'')
-        $.facebox.reveal($(target).clone().show(), klass)
+        $.facebox.reveal($(target).clone().show(), local_settings)
 
       // image
       } else if (this.href.match(image_types)) {
         var image = new Image()
         image.onload = function() {
-          $.facebox.reveal('<div class="image"><img src="' + image.src + '" /></div>', klass)
+          $.facebox.reveal('<div class="image"><img src="' + image.src + '" /></div>', local_settings)
         }
         image.src = this.href
         
@@ -159,11 +159,10 @@
       // Extension by Henrik Nyh <http://henrik.nyh.se> for http://delishlist.com
       } else if (this.href.match(/^https?:\/\//)) {
         var iframe = '<iframe src="' + this.href + '"></iframe>'
-        $.facebox.reveal(iframe, klass)
-
+        $.facebox.reveal(iframe, local_settings)
       // ajax
       } else {
-        $.get(this.href, function(data) { $.facebox.reveal(data, klass) })
+        $.get(this.href, function(data) { $.facebox.reveal(data, local_settings) })
       }
 
       return false
@@ -195,7 +194,6 @@
 
     $('#facebox .close').click($.facebox.close)
     $('#facebox .close_image').attr('src', $.facebox.settings.close_image)
-    $('#facebox .caption').html($.facebox.settings.caption);
   }
 
   // getPageScroll() by quirksmode.com

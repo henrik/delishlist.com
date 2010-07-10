@@ -1,10 +1,14 @@
 helpers do
   
-  attr_writer :title, :header
+  attr_writer :header
 
   def title
-    format = @title || "%s"
+    format = @page_title || "%s"
     h(format % "Delishlist")
+  end
+  
+  def title=(title)
+    @page_title = title
   end
   
   def header

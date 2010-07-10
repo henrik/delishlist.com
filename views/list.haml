@@ -1,10 +1,9 @@
 - self.title = (@tags.empty? ? "" : "#{fancy_tags(@tags, :html => false)} in ") + "#{@user.s} delishlist"
 - @sort = sort_link
-
-:javascript
-  window.Delishlist = {
-    user: "#{@user}"
-  };
+- head do
+  %script(type="text/javascript" src="/javascripts/list.js")
+  :javascript
+    window.Delishlist = #{ { :user => @user.name }.to_json };
 
 #sidebar
 

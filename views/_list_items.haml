@@ -1,11 +1,12 @@
 %dl.list
   - @list.items.each do |item|
     %dt{ title_attributes(item) }
-      .thumbnail= item_image(item)
+      %div.thumbnail{ :id => "#{item.unchanging_anchor}_thumb" }= item_image(item)
       = link_to(h(TitleImprover.improve_title(item.title)), referralize(item.url), :class => "title")
       = rating_link(item)
       %span.actions
         = link_to(image_tag('anchor.png', :alt => "link"), '#'+item.anchor, :class => "anchor", :title => "Link directly to this item")
+        = link_to(image_tag('picture.png', :alt => "change image"), "/#{@user}/set_image?url=#{Rack::Utils.escape(item.url)}&title=#{Rack::Utils.escape(item.title)}&id=#{item.unchanging_anchor}", :class => "image", :title => "Change image for this item")
         = link_to(image_tag('pencil.png', :alt => "edit"), h(delicious_edit_url(item)), :class => "edit", :title => "Edit this item on Delicious, if it's yours")
     %dd
       %p.description= format_description(item.description)

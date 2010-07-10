@@ -2,6 +2,7 @@
 # or e.g. "irb -r setup" won't work.
 require "rubygems"
 require 'vendor/sinatra/lib/sinatra'  # Not pre-installed on Dreamhost.
+require "json"  # TODO: vendor
 
 cache_minutes = 15  # Since we can't reference settings from each other.
 set :cache_minutes, cache_minutes

@@ -41,12 +41,12 @@ class Item
     [Slugalizer.slugalize(title), unchanging_anchor].join("__")
   end
   
-private
-
   # Short but likely unique identifier, as part of URL anchors (fragments).
   def unchanging_anchor
     self.key[0,6]
   end
+  
+private
 
   def set_tags_and_rating(tags_and_ratings)
     tags_and_ratings = tags_and_ratings.reject { |t| t.downcase == "wishlist" }
