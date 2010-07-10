@@ -24,11 +24,11 @@ class List
   end
 
   def lowest_rating
-    @lowest_rating ||=  items.any? ? items.min_by { |i| i.rating }.rating : nil
+    @lowest_rating ||=  items.any? ? items.map { |i| i.rating }.min : nil
   end
 
   def highest_rating
-    @highest_rating ||= items.any? ? items.max_by { |i| i.rating }.rating : nil
+    @highest_rating ||= items.any? ? items.map { |i| i.rating }.max : nil
   end
   
   

@@ -53,7 +53,7 @@ private
     ratings, tags = tags_and_ratings.partition { |tag| tag.match(RATING_RE) }
     
     @tags = Set.new(tags)
-    @rating = ratings.empty? ? nil : ratings.max_by { |r| r.length }.length
+    @rating = ratings.empty? ? nil : ratings.map { |r| r.length }.max
   end
 
 end
