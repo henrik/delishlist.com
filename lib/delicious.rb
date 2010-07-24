@@ -20,7 +20,7 @@ class Delicious
     parse_tag_description
     
     results = parse_items
-    if number = previous_page_number
+    while number = previous_page_number do
       get_page(number)
       results += parse_items
     end
