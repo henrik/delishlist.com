@@ -14,7 +14,7 @@ helpers do
 
   def delicious_edit_url(item)
     url = Rack::Utils.escape(item.url)
-    "http://delicious.com/save?url=#{url}"
+    "http://delicious.com/save?url=#{url}&noui=1"
   end
   
 end
