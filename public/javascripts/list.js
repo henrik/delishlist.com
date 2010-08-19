@@ -62,7 +62,7 @@ List = (function() {
           this.delishlist_hasLoaded = true;
         });
       },
-      caption: "The ”Delete” link is in the top right. Focus a text field (not ”Notes”) and press Enter/Return to submit an edit."
+      caption: "The ”Delete” link is above the title. Focus a text field (not ”Notes”) and press Enter/Return to submit an edit."
     });
   }
   
