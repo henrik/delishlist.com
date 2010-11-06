@@ -1,6 +1,6 @@
 # We need these in app.rb, not just in setup.rb, or "ruby app.rb" won't launch the app.
 require "rubygems"
-require "#{File.dirname(__FILE__)}/vendor/sinatra-1.0/lib/sinatra.rb"
+require "sinatra"
 
 require "#{File.dirname(__FILE__)}/setup.rb"
 
