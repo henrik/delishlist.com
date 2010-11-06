@@ -1,5 +1,5 @@
 require "rubygems"
-require "sinatra"
+require "#{File.dirname(__FILE__)}/vendor/sinatra-1.0/lib/sinatra.rb"
 require "json"
 require "haml"
 require "sass"
