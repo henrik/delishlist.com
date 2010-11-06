@@ -6,7 +6,6 @@ default_run_options[:pty] = true
 
 set :user, 'delish'
 set :domain, 'delishlist.com'
-set :tempdomain, '208.113.197.144'  # Until DNS is changed.
 
 # cap deploy:cleanup
 set :keep_releases, 5
@@ -20,7 +19,7 @@ set :git_shallow_clone, 1
 set :scm_verbose, true
 set :use_sudo, false
 
-server tempdomain, :app, :web
+server domain, :app, :web
 
 desc "Link in shared stuff"
 task :after_update_code do
