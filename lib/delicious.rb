@@ -3,6 +3,7 @@
 
 require "net/http"
 require "open-uri"
+require "date"
 
 require "rubygems"
 require "hpricot"
@@ -53,9 +54,8 @@ private
     @doc.search("li.post").map do |li|
 
       link_node = li.at("h4 a.taggedlink")
-      date_node = li.at(".dateGroup span")
+      date_node = li.at(".dateGroup")
       desc_node = li.at(".description")
-      
       if date_node
         raw_date = date_node[:title].strip.sub(/ (\d\d)$/, ' 20\1')
         added = Date.parse(raw_date)
@@ -67,7 +67,7 @@ private
         :url         => link_node[:href],
         :description => desc_node && desc_node.inner_text.strip,
         :added       => added,
-        :tags        => li.search(".tagItem").map { |x| x.inner_text }
+        :tags        => li.search(".tag").map { |x| x.inner_text }
       }
     end
   end
