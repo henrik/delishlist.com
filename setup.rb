@@ -1,9 +1,7 @@
-require "rubygems"
-require "sinatra"
-require "json"
-require "haml"
-require "sass"
-require "active_record"
+require 'rubygems'
+require 'bundler'
+Bundler.require
+require 'sass'  # Avoid "tilt" lib warnings.
 
 cache_minutes = 15  # Since we can't reference settings from each other.
 set :cache_minutes, cache_minutes

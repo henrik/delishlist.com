@@ -1,8 +1,5 @@
-# We need these in app.rb, not just in setup.rb, or "ruby app.rb" won't launch the app.
-require "rubygems"
-require "sinatra"
-
 require "#{File.dirname(__FILE__)}/setup.rb"
+set :app_file, __FILE__  # Unbreak Bundler.
 
 get "/" do
   haml :index, :layout => :layout

@@ -1,6 +1,4 @@
 task :environment do
-  require "rubygems"
-  require "sinatra"
   require "setup.rb"
 end
 

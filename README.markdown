@@ -1,6 +1,6 @@
 # Delishlist
 
-Medium-sized Sinatra [site](http://delishlist.com) (rewritten from Merb) deployed with Capistrano to Dreamhost shared hosting.
+Medium-sized Sinatra [site](http://delishlist.com) (rewritten from Merb) deployed with Capistrano.
 
 Wraps links tagged `wishlist` on [Delicious](http://delicious.com) in better presentation.
 
