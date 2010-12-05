@@ -62,7 +62,7 @@ List = (function() {
           this.delishlist_hasLoaded = true;
         });
       },
-      caption: "The ”Delete” link is above the title. Focus a text field (not ”Notes”) and press Enter/Return to submit an edit."
+      caption: "Focus a text field (not ”Notes”) and press Enter/Return to submit an edit. Delete on Delicious, or remove the <code>wishlist</code> tag."
     });
   }
   
