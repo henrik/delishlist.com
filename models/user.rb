@@ -26,6 +26,10 @@ class User
   end
   alias_method :s, :possessive  # "#{@user.s} delishlist"!
 
+  def url_name
+    pinboard? ? "u:#{name}" : name
+  end
+
   def to_s
     name
   end

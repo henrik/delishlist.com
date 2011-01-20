@@ -2,7 +2,7 @@ helpers do
   
   def list_path(opts={})
     parts = []
-    parts << "/#{opts[:user] || @user}"
+    parts << "/#{opts[:user] || @user.url_name}"
     
     tags = opts.has_key?(:tags) ? opts[:tags] : params[:tags]
     parts << "/#{tags}" if tags
@@ -12,9 +12,13 @@ helpers do
     parts.join
   end
 
-  def delicious_edit_url(item)
+  def edit_url(item)
     url = Rack::Utils.escape(item.url)
-    "http://delicious.com/save?url=#{url}&noui=1"
+    if @user.pinboard?
+      "http://pinboard.in/add?showtags=yes&url=#{url}"
+    else
+      "http://delicious.com/save?url=#{url}&noui=1"
+    end
   end
   
 end

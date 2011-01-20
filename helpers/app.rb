@@ -1,7 +1,15 @@
 helpers do
 
-  def delicious_link(text = "Delicious", path = "")
-    link_to(text, URI.join("http://delicious.com/", path).to_s)
+  def source_site_link
+    @user.pinboard? ? pinboard_link : delicious_link
+  end
+
+  def pinboard_link
+    link_to("Pinboard", "http://pinboard.in/")
+  end
+
+  def delicious_link
+    link_to("Delicious", "http://delicious.com/")
   end
   
   def head(&block)

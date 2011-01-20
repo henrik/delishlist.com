@@ -1,12 +1,13 @@
 - self.title = "Welcome to Delishlist!"
 - self.header = "welcome"
 
-%p    
-  = link_to("Sign up on Delicious", "https://secure.delicious.com/register") + ","
+%p
+  #{link_to("Sign up on Delicious", "https://secure.delicious.com/register")} or
+  #{link_to("Pinboard", "http://pinboard.in/signup/")},
   add links tagged <code class="tags">wishlist</code>, then point your browser
-  = "(and your %s)" % link_to("sugar daddy", "http://en.wikipedia.org/wiki/Age_disparity_in_sexual_relationships#Slang_terms")
-  to <code>delishlist.com/<i>username</i></code>.
-  = link_to("See an example!", list_path(:user => "malesca"))
+  (and your #{link_to("sugar daddy", "http://en.wikipedia.org/wiki/Age_disparity_in_sexual_relationships#Slang_terms")})
+  to <code>delishlist.com/<i>username</i></code> or <code>delishlist.com/u:<i>username</i></code>.
+  #{link_to("See an example!", list_path(:user => "u:henrik"))}
 
 #left
 
@@ -51,8 +52,9 @@
     %dd
       %p
         If there is a <code class="tags">wishlist</code> 
-        = delicious_link("tag description", "/help/faq#tagDescriptions") + ","
+        <a href="http://delicious.com/help/faq#tagDescriptions">tag description</a>,
         it's displayed alongside your list as a note. This is a good place to put your size in clothes etc.
+      %p For Pinboard, instead put the text in the description of a link to your Delishlist, tagged both <code class="tags">delishlist</code> and <code class="tags">me</code>.
       %p If the note contains dates like <code class="example">July 26</code>, a countdown like <code class="example">(in 3 days)</code> will be appended. Good for birthdays and other giftable events.
       %p If the tag description contains a paragraph with <code class="example">Address:</code> as the first line, that address is displayed under a header of its own.
 
@@ -64,7 +66,7 @@
         = image_tag('anchor.png', :alt => 'link')
         for a link to that specific item, that you can share.
       %p
-        If you're logged in as this user on Delicious, click
+        If you're logged in as this user, click
         = image_tag('pencil.png', :alt => 'edit')
         for an edit/remove overlay.
       %p

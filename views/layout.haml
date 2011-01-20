@@ -14,7 +14,8 @@
     #header
       #title
         %h1= "%s / %s" % [link_to('delishlist', '/'), header]
-        %p= "a %s wishlist" % link_to('Delicious', 'http://delicious.com/')
+        %p
+          a #{delicious_link} and #{pinboard_link} wishlist
       #sort
         = @sort
   
@@ -25,9 +26,9 @@
       %p
         = "By %s." % link_to('Henrik Nyh', 'http://henrik.nyh.se/')
         = link_to('View source', 'http://github.com/henrik/delishlist.com') + '.'
-        = "Like this site? Get me %s!" % link_to('something', list_path(:user => "malesca"))
+        = "Like this site? Get me %s!" % link_to('something', list_path(:user => "u:henrik"))
       %p
-        Amazon links become referral links (but are not altered on Delicious, of course).
+        Amazon links become referral links (but are not permanently altered, of course).
         "Anchor", "Edit" and "Picture" icons by
         = link_to('Mark James', 'http://www.famfamfam.com/') + "."
       %p
@@ -35,6 +36,6 @@
         = delicious_link
         is licensed under
         = link_to('Creative Commons Attribution Share-Alike 3.0', 'http://creativecommons.org/licenses/by-sa/3.0/') + "."
-        This site is not affiliated with Yahoo! Inc., owner of the "Delicious" trademark.
+        This site is not affiliated with Yahoo! Inc., owner of the "Delicious" trademark, nor with Pinboard.
 
     = partial :'layout/google_analytics'

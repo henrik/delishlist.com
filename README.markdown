@@ -2,9 +2,9 @@
 
 Medium-sized Sinatra [site](http://delishlist.com) (rewritten from Merb) deployed with Capistrano.
 
-Wraps links tagged `wishlist` on [Delicious](http://delicious.com) in better presentation.
+Wraps links tagged `wishlist` on [Delicious](http://delicious.com) or [Pinboard](http://pinboard.in) in better presentation.
 
-Not affiliated with Yahoo! Inc., owner of the "Delicious" trademark.
+Not affiliated with Yahoo! Inc., owner of the "Delicious" trademark, nor with Pinboard.
 
 ## Credits and license
 
