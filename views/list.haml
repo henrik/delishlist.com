@@ -3,7 +3,7 @@
 - head do
   %script(type="text/javascript" src="/javascripts/list.js")
   :javascript
-    window.Delishlist = #{ { :user => @user.name }.to_json };
+    window.Delishlist = #{ { :user => @user.name, :pinboard => @user.pinboard? }.to_json };
 
 #sidebar
 

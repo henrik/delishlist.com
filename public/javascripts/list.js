@@ -52,6 +52,11 @@ List = (function() {
   }
   
   function editInFacebox() {
+    if (Delishlist.pinboard) {
+      var caption = "To delete, visit Pinboard or remove the <code>wishlist</code> tag.";
+    } else {
+      var caption = "Focus a text field (not ”Notes”) and press Enter/Return to submit an edit. Delete on Delicious, or remove the <code>wishlist</code> tag.";
+    }
     $('.actions .edit').facebox(null, {
       reveal_callback: function() {
         $('#facebox iframe').load(function() {
@@ -62,7 +67,7 @@ List = (function() {
           this.delishlist_hasLoaded = true;
         });
       },
-      caption: "Focus a text field (not ”Notes”) and press Enter/Return to submit an edit. Delete on Delicious, or remove the <code>wishlist</code> tag."
+      caption: caption
     });
   }
   
