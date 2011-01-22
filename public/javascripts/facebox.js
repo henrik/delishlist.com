@@ -106,7 +106,7 @@
     $('#facebox').removeClass()
     if (klass) $('#facebox').addClass(klass)
     
-    $('#facebox .caption').html(local_settings ? local_settings.caption : $.facebox.settings.caption);
+    $('#facebox .caption').html(local_settings ? (local_settings.caption || "") : $.facebox.settings.caption);
     
     $('#facebox .content').append(data)
     $('#facebox .loading').remove()
