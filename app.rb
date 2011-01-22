@@ -74,7 +74,7 @@ def get_list
   @user = @list.user
   haml :list
 
-rescue Delicious::NoSuchUser
+rescue Delicious::NoSuchUser, Pinboard::NoSuchUser
 
   haml :no_such_user
 

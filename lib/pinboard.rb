@@ -43,12 +43,10 @@ private
   def get_page(before)
     url = "http://pinboard.in/u:#{@username}/t:#{@tags}/#{"before:#{before}" if before}"
     file = open(url)
-    response_code = file.status.first
-    
-    if response_code == "200"
-      @doc = Hpricot(file.read)
-    else
-      raise NoSuchUser, @username
+    @doc = Hpricot(file.read)
+    # Should check for redirect to /not_found/, but open-uri in Ruby 1.8 is too limited.
+    if @doc.at("#main_column").inner_html.strip == "Page not found."
+      raise(NoSuchUser, @username)
     end
   end
     
