@@ -27,13 +27,16 @@ set :use_sudo, false
 
 server domain, :app, :web
 
-desc "Link in shared stuff"
-task :after_update_code do
-  run "ln -nfs #{shared_path}/log #{release_path}/log"
-end
-
 namespace :deploy do
+
   task :restart do
     run "touch #{current_path}/tmp/restart.txt"
   end
+
+  desc "Link in shared stuff"
+  task :symlink_shared do
+    run "ln -nfs #{shared_path}/log #{release_path}/log"
+  end
+  after "deploy:update_code", "deploy:symlink_shared"
+
 end
