@@ -62,7 +62,7 @@ List = (function() {
         $('#facebox iframe').load(function() {
           if (this.delishlist_hasLoaded) {
             // Not first load event = navigated in iframe = probably edited or deleted. Expire cache!
-            $.post('/expire_cache', { user: Delishlist.user });
+            $.post('/expire_cache', { user: Delishlist.url_name });
           }
           this.delishlist_hasLoaded = true;
         });
