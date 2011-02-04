@@ -1,6 +1,6 @@
 helpers do
   
-  ADDRESS_RE = %r{(?:\A|\n\n)Address:\n+(.+?)(?:\n\n|\z)}m
+  ADDRESS_RE = %r{(?:\A|\r?\n\r?\n)Address: *[\r\n]+(.+?)(?:\r?\n\r?\n|\z)}m
   
   def sort_link
     return unless @list.more_than_one_rating?
@@ -22,8 +22,10 @@ helpers do
       note    = description.sub(ADDRESS_RE, '').strip
       
       capture_haml do
-        haml_tag(:h3, "Note")
-        haml_tag(:div, nl2br(h(note)), :id => "note")
+        unless note.empty?
+          haml_tag(:h3, "Note")
+          haml_tag(:div, nl2br(h(note)), :id => "note")
+        end
         
         if address
           haml_tag(:h3, "Address")
