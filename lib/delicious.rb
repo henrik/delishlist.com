@@ -17,7 +17,8 @@ class Delicious
   end
   
   def tag_description_and_items
-    get_page(1)
+    @page = 1
+    get_page(@page)
     parse_tag_description
     
     results = parse_items
@@ -33,13 +34,13 @@ class Delicious
 private
   
   def parse_tag_description
-    get_page(1) unless @doc
-    desc = @doc.at("#tagdescdisp")
-    @tag_description = desc && desc.inner_text.strip
+    # Seems Delicious removed these.
+    # TODO: Support some other means of getting a description?
   end
   
   def get_page(page)
-    file = open("http://delicious.com/#{@username}/#{@tags}?setcount=100&page=#{page}")
+    @page = page
+    file = open("http://delicious.com/#{@username}/#{@tags}?page=#{@page}")
     response_code = file.status.first
     
     if response_code == "200"
@@ -53,31 +54,48 @@ private
     added = nil  # Items from same day only have date on the first one.
     @doc.search("li.post").map do |li|
 
-      link_node = li.at("h4 a.taggedlink")
-      date_node = li.at(".dateGroup")
-      desc_node = li.at(".description")
+      link_node = li.at("h4 a")
+      date_node = li.at(".date")
+      desc_node = li.at(".notes span")
+      url_node  = li.at(".full-url span")
+
+      url = url_node.inner_text
+
+      last_good_date = Date.today
       if date_node
-        raw_date = date_node[:title].strip.sub(/ (\d\d)$/, ' 20\1')
-        added = Date.parse(raw_date)
+        raw_date = date_node.inner_text
+        # There are some broken dates on new Delicious.
+        begin
+          added = Date.parse(raw_date)
+          last_good_date = added
+        rescue ArgumentError => e
+          if e.message == "invalid date"
+            added = last_good_date
+          else
+            raise
+          end
+        end
       end
-      
+
+      if desc_node
+        desc = desc_node.inner_text.sub(/\A"(.*)"\z/, '\1')
+      end
+
       {
         :key         => li[:id].split('-')[1],
-        :title       => link_node.inner_text,
-        :url         => link_node[:href],
-        :description => desc_node && desc_node.inner_text.strip,
+        :title       => link_node[:title],
+        :url         => url,
+        :description => desc,
         :added       => added,
-        :tags        => li.search(".tag").map { |x| x.inner_text }
+        :tags        => li.search(".tag-chain-tag a").map { |x| x.inner_text }
       }
     end
   end
   
   def previous_page_number
-    if prev_link = @doc.at("a.pn.next")
-      prev_link[:href][/\?page=(\d+)/, 1]
-    else
-      nil
-    end
+    # New Delicious incorrectly uses .next for previous...
+    prev_number = @doc.search("a.pn.next").map { |x| x[:href][/[?&]page=(\d+)/, 1].to_i }.find { |num| num > @page }
+    prev_number
   end
   
 end
@@ -86,5 +104,6 @@ if __FILE__ == $0
   
   del = Delicious.new("johanni", "wishlist")
   p del.tag_description_and_items
+  #p del.tag_description_and_items.last.map{|x| x[:added]}
   
 end
