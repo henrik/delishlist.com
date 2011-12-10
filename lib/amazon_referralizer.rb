@@ -5,8 +5,8 @@
 #
 # E.g.:
 #
-#   Amazon::Referralizer.referralize("http://amazon.co.uk/o/ASIN/B00168PO6U/evil-20", "good-20")
-#   # => "http://amazon.co.uk/o/ASIN/B00168PO6U/good-20"
+#   Amazon::Referralizer.referralize("http://amazon.co.uk/o/ASIN/B00168PO6U?tag=evil-20", "good-20")
+#   # => "http://amazon.co.uk/o/ASIN/B00168PO6U?tag=good-20"
 #
 
 class Amazon
@@ -18,9 +18,13 @@ class Amazon
       url = url.to_s
 
       if url.match(%r{^https?://(.+\.)?(amazon\.|amzn\.com\b)}i)
-        url.sub(%r{\b(#{ASIN_RE})\b(/#{REFERRAL_ID_RE}\b)?}, "\\1/#{tag}").
-            gsub(/&tag=#{REFERRAL_ID_RE}\b/, '').
-            gsub(/\?tag=#{REFERRAL_ID_RE}\b/, '?').sub(/\?$/, '')
+        url.sub!(%r{\b(#{ASIN_RE})\b(/#{REFERRAL_ID_RE}\b)?}, "\\1")
+        url.gsub!(/&tag=#{REFERRAL_ID_RE}\b/, '')
+        url.gsub!(/\?tag=#{REFERRAL_ID_RE}\b/, '?')
+        url.sub!(/\?$/, '')
+        url.sub!(/\?&/, '?')
+        separator = url.include?("?") ? "&" : "?"
+        [url, "tag=#{tag}" ].join(separator)
       else
         url
       end
@@ -40,43 +44,47 @@ if __FILE__ == $0
     end
     
     def test_url_formats
-      assert_conversion "http://amazon.com/gp/product/B00168PO6U/test-20",
+      assert_conversion "http://amazon.com/gp/product/B00168PO6U?tag=test-20",
                         "http://amazon.com/gp/product/B00168PO6U"
-      assert_conversion "http://amazon.com/exec/obidos/tg/detail/-/B00168PO6U/test-20",
+      assert_conversion "http://amazon.com/gp/product/B00168PO6U/?tag=test-20",
+                        "http://amazon.com/gp/product/B00168PO6U/"
+      assert_conversion "http://amazon.com/exec/obidos/tg/detail/-/B00168PO6U?tag=test-20",
                         "http://amazon.com/exec/obidos/tg/detail/-/B00168PO6U"
-      assert_conversion "http://amazon.com/o/ASIN/B00168PO6U/test-20",
+      assert_conversion "http://amazon.com/o/ASIN/B00168PO6U?tag=test-20",
                         "http://amazon.com/o/ASIN/B00168PO6U"
-      assert_conversion "http://amazon.com/dp/B00168PO6U/test-20",
+      assert_conversion "http://amazon.com/dp/B00168PO6U?tag=test-20",
                         "http://amazon.com/dp/B00168PO6U"
     end
     
     def test_international
-      assert_conversion "http://amazon.co.uk/o/ASIN/B00168PO6U/test-20",
+      assert_conversion "http://amazon.co.uk/o/ASIN/B00168PO6U?tag=test-20",
                         "http://amazon.co.uk/o/ASIN/B00168PO6U"
-      assert_conversion "http://amazon.de/o/ASIN/B00168PO6U/test-20",
+      assert_conversion "http://amazon.de/o/ASIN/B00168PO6U?tag=test-20",
                         "http://amazon.de/o/ASIN/B00168PO6U"
     end
     
     def test_short
-      assert_conversion "http://amzn.com/B00168PO6U/test-20",
+      assert_conversion "http://amzn.com/B00168PO6U?tag=test-20",
                         "http://amzn.com/B00168PO6U"
     end
     
     def test_keep_ref
-      assert_conversion "http://www.amazon.com/dp/B00168PO6U/test-20/ref=cm_sw_su_dp",
+      assert_conversion "http://www.amazon.com/dp/B00168PO6U/ref=cm_sw_su_dp?tag=test-20",
                         "http://www.amazon.com/dp/B00168PO6U/ref=cm_sw_su_dp"
     end
     
     def test_replace_other_tag_in_path
-      assert_conversion "http://www.amazon.com/dp/B00168PO6U/test-20/ref=cm_sw_su_dp",
+      assert_conversion "http://www.amazon.com/dp/B00168PO6U/ref=cm_sw_su_dp?tag=test-20",
                         "http://www.amazon.com/dp/B00168PO6U/evil-20/ref=cm_sw_su_dp"
     end
     
-    def test_remove_other_tag_in_query_string
-      assert_conversion "http://www.amazon.com/dp/B00168PO6U/test-20/ref=cm_sw_su_dp",
+    def test_query_string
+      assert_conversion "http://www.amazon.com/dp/B00168PO6U/ref=cm_sw_su_dp?tag=test-20",
                         "http://www.amazon.com/dp/B00168PO6U/ref=cm_sw_su_dp?tag=evil-20"
-      assert_conversion "http://www.amazon.com/dp/B00168PO6U/test-20/ref=cm_sw_su_dp?one=1&two=2",
+      assert_conversion "http://www.amazon.com/dp/B00168PO6U/ref=cm_sw_su_dp?one=1&two=2&tag=test-20",
                         "http://www.amazon.com/dp/B00168PO6U/ref=cm_sw_su_dp?one=1&tag=evil-20&two=2"
+      assert_conversion "http://www.amazon.com/dp/B00168PO6U/ref=cm_sw_su_dp?one=1&two=2&tag=test-20",
+                        "http://www.amazon.com/dp/B00168PO6U/ref=cm_sw_su_dp?tag=evil-20&one=1&two=2"
     end
   
   end
