@@ -4,6 +4,7 @@
 require "net/http"
 require "open-uri"
 require "date"
+require "cgi"
 
 require "rubygems"
 require "hpricot"
@@ -57,9 +58,8 @@ private
       link_node = li.at("h4 a")
       date_node = li.at(".date")
       desc_node = li.at(".notes span")
-      url_node  = li.at(".full-url span")
 
-      url = url_node.inner_text
+      url = CGI.unescape(link_node[:href].sub("/redirect?url=", ""))
 
       last_good_date = Date.today
       if date_node
