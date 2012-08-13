@@ -1,13 +1,15 @@
+# encoding: utf-8
+
 helpers do
-  
+
   def first_of_its_rating?(item)
     @last_rating && @last_rating != item.rating
   end
-  
+
   def first_of_its_year?(item)
     @last_date && @last_date.year != item.added.year
   end
-  
+
   def first_in_new_section?(item)
     @list.sorted_by_recent? ? first_of_its_year?(item) : first_of_its_rating?(item)
   end
@@ -20,24 +22,24 @@ helpers do
       :class => klass
     }
   end
-  
+
   def referralize(url)
     Amazon::Referralizer.referralize(url, "delishlist-20")
   end
-    
+
   def format_description(description)
     DescriptionFormatter.new(description).format
   end
-  
-  
+
+
   def item_image(item)
     url = Image.image_url_for_item_and_user(item, @user)
     url && image_tag(url)
   end
-  
-  
+
+
   # Date
-  
+
   def date_attributes(item)
     days_ago = (Date.today - item.added).to_i
     klass = days_ago < 7 ? "days-ago-#{days_ago}" : nil
@@ -65,36 +67,36 @@ helpers do
     date.strftime(format_string).
       sub(/\b0/, "")  # Remove leading zeros.
   end
-  
-  
+
+
   # Rating
-  
+
   def rating_link(item)
     tag_link(item.rating_slug)
   end
-  
+
 
   # Tags
 
   def tags_for(item)
     item.tags.sort.map { |tag| tag_link(tag) }.join(", ")
   end
-  
-  def tag_link(tag)    
+
+  def tag_link(tag)
     if @tags.any? && !@tags.include?(tag)
       tags = [tag] + @tags
       tags_string = tags.join('+')
-      
+
       link = link_to(fancy_tags(tags), list_path(:tags => tags_string), :title => "See only items tagged #{q tags_string}")
       drilldown = %{<span class="drilldown">%s</span>} % link
     else
       drilldown = ""
     end
-    
+
     tag_link = link_to(fancy_tag(tag), list_path(:tags => tag), :title => "See only items tagged #{q tag}")
     %{<span class="tag-with-drilldown">%s%s</span>} % [tag_link, drilldown]
   end
-  
+
   def fancy_tag(tag, options = {})
     options = { :html => true }.merge(options)
 
@@ -104,7 +106,7 @@ helpers do
     else
       blank_star = windows? ? "_" : "☆"
     end
-    
+
     case tag
     when Item::RATING_RE, "_"
       rating = tag=="_" ? 0 : tag.length
@@ -116,11 +118,11 @@ helpers do
       options[:html] ? h(tag) : tag
     end
   end
-  
+
   def fancy_tags(tags, options = {})
     tags.map {|tag| fancy_tag(tag, options) }.join("+")
   end
-  
+
   # Windows doesn't seem to include any default font that handles Unicode stars.
   def windows?
     request.user_agent.include?("Windows")

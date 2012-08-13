@@ -1,6 +1,8 @@
+# encoding: utf-8
+
 class User
   attr_reader :name
-  
+
   def initialize(name)
     if name.to_s.match(/\Au:(.+)/)
       @name = $1

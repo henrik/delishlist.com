@@ -1,5 +1,7 @@
+# encoding: utf-8
+
 class TitleImprover
-  
+
   TRANSLATIONS = [
     [/Amazon.com: (.+) \([A-Z\d]{10,13}\): (.+?): Books/, '\2 - \1'],
     [/Amazon.com: (.+): Books: ([^:]+)/, '\2 - \1'],
@@ -9,14 +11,14 @@ class TitleImprover
     [/Sephora: (.+)/, '\1'],
     [/Juicy Couture \|(?: [^|]+ \|)* (.+)/, '\1'],
   ]
-  
+
   def self.improve_title(title)
     TRANSLATIONS.each do |from, unto|
       return title.sub(from, unto) if title.match(/\A#{from}\z/)
     end
     title
   end
-  
+
 end
 
 if $0 == __FILE__
@@ -24,7 +26,7 @@ if $0 == __FILE__
   require "test/unit"
 
   class TitleImproverTest < Test::Unit::TestCase
-    
+
     def test_transformations
       expectations = {
         "Some - Random - Title" => "Some - Random - Title",
@@ -42,7 +44,6 @@ if $0 == __FILE__
         assert_equal unto, TitleImprover.improve_title(from)
       end
     end
-    
+
   end
-  
 end

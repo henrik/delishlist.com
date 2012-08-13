@@ -19,7 +19,7 @@ end
 
 post '/:user/set_image' do
   setup_image
-  
+
   @image = Image.new(:item_url => @url, :image_url => params[:image_url], :username => @user.name, :ip => request.ip)
   if @image.save
     haml :set_image_done, :layout => :'layout/set_image'
@@ -55,27 +55,23 @@ get "/:user/:tags" do
 end
 
 def get_list
-
   username = params[:user]
 
   @list = ObjectCache.get_or_set(username, :ttl => settings.cache_seconds, :root => settings.cache_root) {
     List.new(username)
   }
-  
+
   @tags = params[:tags].to_s.split(/[+ ]/)
   @list.filter_to_tags(@tags)
-  
+
   if params[:by] == List::ORDER_RECENT
     @list.sort_by_recent
   else
     @list.sort_by_rating
   end
-  
+
   @user = @list.user
   haml :list
-
 rescue Delicious::NoSuchUser, Pinboard::NoSuchUser
-
   haml :no_such_user
-
 end
