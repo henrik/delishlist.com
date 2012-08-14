@@ -5,3 +5,7 @@ gem "json"
 gem "hpricot"
 gem "activerecord", :require => "active_record"
 gem "pg"
+
+group :production do
+  gem "newrelic_rpm"
+end
