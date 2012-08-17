@@ -19,6 +19,9 @@ GEM
       arel (~> 2.0.2)
       tzinfo (~> 0.3.23)
     activesupport (3.0.3)
+    airbrake (3.0.9)
+      activesupport
+      builder
     arel (2.0.6)
     builder (2.1.2)
     haml (3.0.24)
@@ -36,6 +39,7 @@ PLATFORMS
 
 DEPENDENCIES
   activerecord
+  airbrake
   haml (~> 3.0)
   hpricot
   json
