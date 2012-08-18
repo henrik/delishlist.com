@@ -55,7 +55,7 @@ private
     added = nil  # Items from same day only have date on the first one.
     @doc.search(".linkList .link").map do |li|
       key = li[:md5]
-      added = Time.at(li[:date].to_i)
+      added = Time.at(li[:date].to_i).to_date
 
       link_node = li.at("a.title")
       title = link_node[:title]
