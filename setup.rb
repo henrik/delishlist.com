@@ -8,7 +8,7 @@ set :cache_minutes, cache_minutes
 set :cache_seconds, cache_minutes * 60
 
 if ENV['RACK_ENV'] == 'production'
-  share_dir = "/use_memcache_instead/shared"
+  share_dir = "/tmp/use_memcache_instead/shared"
 else
   share_dir = "/tmp/delishlist"
   FileUtils.mkdir_p share_dir
