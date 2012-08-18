@@ -3,17 +3,14 @@ require 'bundler'
 Bundler.require
 require 'sass'  # Avoid "tilt" lib warnings.
 
+# Defined in ENV on Heroku. To try locally, start memcached and uncomment:
+#ENV['MEMCACHE_SERVERS'] = "localhost"
+
 cache_minutes = 15  # Since we can't reference settings from each other.
 set :cache_minutes, cache_minutes
 set :cache_seconds, cache_minutes * 60
 
-if ENV['RACK_ENV'] == 'production'
-  share_dir = "/tmp/use_memcache_instead/shared"
-else
-  share_dir = "/tmp/delishlist"
-  FileUtils.mkdir_p share_dir
-end
-set :cache_root, "#{share_dir}/cache"
+set :cache, (ENV["MEMCACHE_SERVERS"] ? Dalli::Client.new : nil)
 
 set :haml, :format => :html5, :attr_wrapper => %{"}
 

@@ -41,7 +41,7 @@ get '/scrape_images' do
 end
 
 post "/expire_cache" do
-  ObjectCache.new(params[:user], :root => settings.cache_root).expire
+  ObjectCache.new(settings.cache).expire(params[:user])
   "OK"
 end
 
@@ -57,7 +57,7 @@ end
 def get_list
   username = params[:user]
 
-  @list = ObjectCache.get_or_set(username, :ttl => settings.cache_seconds, :root => settings.cache_root) {
+  @list = ObjectCache.new(settings.cache).fetch(username, settings.cache_seconds) {
     List.new(username)
   }
 

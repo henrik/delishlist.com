@@ -1,60 +1,28 @@
 require 'digest/md5'
 
 class ObjectCache
-  
-  DEFAULT_TTL = 5 * 60  # 5 minutes
-  DEFAULT_ROOT = "/tmp/cache"
-  
-  def initialize(key, opts={})
-    @key  = key
-    @ttl  = opts[:ttl]  || DEFAULT_TTL
-    @root = opts[:root] || DEFAULT_ROOT
-    FileUtils.mkdir_p(@root)
+  def initialize(cache)
+    @cache = cache
   end
-  
-  def self.get_or_set(key, opts={})
-    cache = new(key, opts)
-    unless object = cache.get
-      object = yield
-      cache.set(object)
+
+  def expire(raw_key)
+    return unless @cache
+
+    @cache.delete key(raw_key)
+  end
+
+  def fetch(raw_key, ttl)
+    return yield unless @cache
+
+    @cache.fetch key(raw_key), ttl do
+      yield
     end
-    object
   end
-  
-  def get
-    fresh? && File.open(path) { |f| Marshal.load(f) }
-  end
-  
-  def set(value)
-    File.open(path, 'w') { |f| Marshal.dump(value, f) }
-  end
-  
-  def expire
-    FileUtils.rm_f(path)
-  end
-  
+
 private
 
-  def fresh?
-    exist? && age <= @ttl
+  # Hash it since memcache has limits on key names.
+  def key(raw_key)
+    Digest::MD5.hexdigest(raw_key)
   end
-  
-  def age
-    Time.now - File.mtime(path)
-  end
-
-  def exist?
-    File.exist?(path)
-  end
-  
-  # We work with the MD5 hash since keys like "../foo" would allow for
-  # file system path injection hacks.
-  def key
-    @md5_key ||= Digest::MD5.hexdigest(@key)
-  end
-
-  def path
-    @path ||= File.join(@root, key)
-  end
-  
 end
