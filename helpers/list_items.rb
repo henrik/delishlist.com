@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 helpers do
-
   def first_of_its_rating?(item)
     @last_rating && @last_rating != item.rating
   end
@@ -128,5 +127,4 @@ helpers do
     request.user_agent.include?("Windows")
   end
   private :windows?
-
 end
