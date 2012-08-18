@@ -8,5 +8,6 @@ gem "pg"
 gem "airbrake"
 
 group :production do
+  gem "unicorn"
   gem "newrelic_rpm"
 end
