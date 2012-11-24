@@ -2,6 +2,8 @@ class Image < ActiveRecord::Base
   validates_format_of :image_url, :with => %r{\Ahttps?://}, :allow_blank => true
   validates_presence_of :item_url, :username, :ip
 
+  before_save :protect_from_spam
+
   def self.image_url_for_item_and_user(item, user)
     image_url_for_item_url_and_user(item.url, user)
   end
@@ -19,7 +21,18 @@ class Image < ActiveRecord::Base
     urls
   end
 
-private
+  private
+
+  def protect_from_spam
+    # Got thousands and thousands of these.
+    # Check for new spam URLs:
+    #   heroku run console
+    #   require "./app.rb"
+    #   Image.having("COUNT(*) > 10").count(group: "item_url")
+    if image_url.to_s.include?("fit-pc2.com")
+      raise "Smells like spam!"
+    end
+  end
 
   def self.latest_image_for_url_and_user(url, user)
     order = send(:sanitize_sql_array, ['(username = ?) DESC, id DESC', user.name])
