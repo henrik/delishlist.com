@@ -27,9 +27,13 @@ class Image < ActiveRecord::Base
     # Got thousands and thousands of these.
     # Check for new spam URLs:
     #   heroku run console
-    #   require "./app.rb"
+    #   require "./app"
     #   Image.having("COUNT(*) > 10").count(group: "item_url")
-    if image_url.to_s.include?("fit-pc2.com")
+    #
+    # And maybe do:
+    #
+    #   Image.where(item_url: "http://fit-pc2.com/").delete_all
+    if image_url.to_s.include?("fit-pc2.com") || item_url.to_s.include?("fit-pc2.com")
       raise "Smells like spam!"
     end
   end
