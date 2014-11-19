@@ -53,7 +53,7 @@ List = (function() {
   
   function editInFacebox() {
     if (Delishlist.pinboard) {
-      var caption = "To delete, visit Pinboard or remove the <code>wishlist</code> tag.";
+      var caption = "To delete, see the \"delete\" link at the top or remove the <code>wishlist</code> tag.";
     } else {
       var caption = "Focus a text field (not ”Notes”) and press Enter/Return to submit an edit. Delete on Delicious, or remove the <code>wishlist</code> tag.";
     }
