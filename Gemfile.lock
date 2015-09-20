@@ -7,7 +7,7 @@ GIT
       tilt (~> 1.1)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://rubygems.org/
   specs:
     activemodel (3.0.3)
       activesupport (= 3.0.3)
@@ -28,8 +28,8 @@ GEM
     haml (3.0.24)
     hpricot (0.8.3)
     i18n (0.5.0)
-    json (1.4.6)
-    kgio (2.7.4)
+    json (1.8.3)
+    kgio (2.10.0)
     memcachier (0.0.2)
     newrelic_rpm (3.3.3)
     pg (0.12.2)
@@ -57,3 +57,6 @@ DEPENDENCIES
   pg
   sinatra (~> 1.1.1)!
   unicorn
+
+BUNDLED WITH
+   1.10.6
