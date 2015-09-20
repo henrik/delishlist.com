@@ -9,7 +9,6 @@ gem "activerecord", :require => "active_record"
 gem "pg"
 gem "airbrake"
 gem "dalli"
-gem "memcachier"
 
 group :production do
   gem "unicorn"
