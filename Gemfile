@@ -1,5 +1,5 @@
 source "https://rubygems.org"
-ruby "1.9.3"
+ruby "2.2.2"
 
 gem "sinatra", '~> 1.1.1', :git => "https://github.com/sinatra/sinatra.git"
 gem "haml", '~> 3.0'
