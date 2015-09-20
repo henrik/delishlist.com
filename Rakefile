@@ -1,5 +1,5 @@
 task :environment do
-  require "setup.rb"
+  require_relative "setup.rb"
 end
 
 namespace :db do

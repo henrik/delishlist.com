@@ -6,6 +6,14 @@ Wraps links tagged `wishlist` on [Delicious](http://delicious.com) or [Pinboard]
 
 Not affiliated with Yahoo! Inc., owner of the "Delicious" trademark, nor with Pinboard.
 
+## Dev
+
+    bundle
+    createdb delishlist_dev
+    rake db:migrate
+    rackup
+    open http://localhost:9292
+
 ## Credits and license
 
 "Anchor", "Edit" and "Picture" icons are by [Mark James](http://www.famfamfam.com) under Creative Commons Attribution 2.5.

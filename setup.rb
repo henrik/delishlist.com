@@ -14,7 +14,7 @@ set :cache, (ENV["MEMCACHE_SERVERS"] ? Dalli::Client.new : nil)
 
 set :haml, :format => :html5, :attr_wrapper => %{"}
 
-db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/mydb')
+db = URI.parse(ENV['DATABASE_URL'] || 'postgres://localhost/delishlist_dev')
 ActiveRecord::Base.establish_connection(
   :adapter  => db.scheme == 'postgres' ? 'postgresql' : db.scheme,
   :host     => db.host,
